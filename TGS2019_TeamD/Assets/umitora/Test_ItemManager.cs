@@ -4,38 +4,36 @@ using UnityEngine;
 
 //using static;
 
-public class Test_ItemManager : MonoBehaviour {
+public class Test_ItemManager : MonoBehaviour
+{
+
+    const int CAPACITY = 40;
+    const int PLAYER_S_WEIGHT = 0;
+    const int PLAYER_M_WEIGHT = 10;
+    const int PLAYER_L_WEIGHT = 20;
+    const int PLAYER_XL_WEIGHT = 30;
 
     public enum Size
     {
-        SHOU,
-        CHU,
-        DAI,
-        TOKUDAI,
+        S,
+        M,
+        L,
+        XL,
 
         MAX,
     }
-    Size PlayerStatus=Size.CHU;
-    
-    int shouNum = 0;
-    int chuNum = 0;
-    int daiNum = 0;
-    int tokudaiNum = 0;
+    Size PlayerStatus = Size.M;
 
-    float Capacity;
+    int CurrentWeight = 0;
 
 
-
-    float CurrentWeight = 0;
-
-
-    public struct Item
+    public struct ITEM
     {
         public Size size;
         public int weight;
         public int num;
     }
-    Item[] item = new Item[(int)Size.MAX];
+    ITEM[] Item = new ITEM[(int)Size.MAX];
 
 
 
@@ -43,7 +41,7 @@ public class Test_ItemManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        ItemInit();
+        ItemInit(); //アイテムの個数とか重さとかの初期化
 
 
 
@@ -51,36 +49,112 @@ public class Test_ItemManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-		
-
-
-
-
-	}
-
-
-    public void PopItem(string tag)
+    void Update()
     {
+
+
+
+
+
     }
 
+    //アイテムそれぞれが何個あるか取得する
+    public void GetItemNum(ref int[] tmp)
+    {
+        tmp[0] = Item[(int)Size.S].num;
+        tmp[1] = Item[(int)Size.M].num;
+        tmp[2] = Item[(int)Size.L].num;
+        tmp[3] = Item[(int)Size.XL].num;
+
+
+
+    }
+
+    //アイテムを出す
+    public void PopItem(string tag)
+    {
+        switch (tag)
+        {
+            case "S_Item":
+                Item[(int)Size.S].num--;
+                CurrentWeight -= Item[(int)Size.S].weight;
+
+                break;
+
+            case "M_Item":
+                Item[(int)Size.M].num--;
+                CurrentWeight -= Item[(int)Size.M].weight;
+
+                break;
+
+            case "L_Item":
+                Item[(int)Size.L].num--;
+                CurrentWeight -= Item[(int)Size.L].weight;
+
+                break;
+
+            case "XL_Item":
+                Item[(int)Size.XL].num--;
+                CurrentWeight -= Item[(int)Size.XL].weight;
+
+                break;
+        }
+
+
+
+
+
+    }
+    //アイテムを入れる
     public bool PushItem(string tag)
     {
         switch (tag)
         {
-            case "SHOU":
-                shouNum++;
+            case "S_Item":
+                //int index = (int)Size.SHOU;
+                if (CurrentWeight + Item[(int)Size.S].weight <= CAPACITY)
+                {
+                    CurrentWeight += Item[(int)Size.S].weight;
+                    Item[(int)Size.S].num++;
+                }
+                else
+                    return false;
+
                 break;
 
-            case "CHU":
+            case "M_Item":
+                if (CurrentWeight + Item[(int)Size.M].weight <= CAPACITY)
+                {
+                    CurrentWeight += Item[(int)Size.M].weight;
+                    Item[(int)Size.M].num++;
+
+                }
+                else
+                    return false;
 
                 break;
 
-            case "DAI":
+            case "L_Item":
+                if (CurrentWeight + Item[(int)Size.L].weight <= CAPACITY)
+                {
+                    CurrentWeight += Item[(int)Size.L].weight;
+                    Item[(int)Size.L].num++;
+
+                }
+                else
+                    return false;
 
                 break;
 
-            case "TOKUDAI":
+            case "XL_Item":
+                if (CurrentWeight + Item[(int)Size.XL].weight <= CAPACITY)
+                {
+                    CurrentWeight += Item[(int)Size.XL].weight;
+                    Item[(int)Size.XL].num++;
+
+                }
+                else
+                    return false;
 
                 break;
         }
@@ -89,54 +163,91 @@ public class Test_ItemManager : MonoBehaviour {
         return true;
     }
 
-
-    public float GetWeight()
+    //プレイヤーの重さを取得
+    public int GetWeight()
     {
-        return 0;
+        return CurrentWeight;
     }
 
+    //もうなんか書くのめんどくなったけどプレイヤーとアイテムの重さを比較するやつ
+    public string ComparisonWeight(string tag)
+    {
+        switch (tag)
+        {
+            case "S_Item":
+                if (CurrentWeight >= PLAYER_M_WEIGHT)
+                    return "Player";
+                else
+                    return "Same";
 
-    //（仮）
+            //break;
+            case "M_Item":
+                if (CurrentWeight >= PLAYER_L_WEIGHT)
+                    return "Player";
+                else if (CurrentWeight <= PLAYER_S_WEIGHT)
+                    return "Item";
+                break;
+
+            case "L_Item":
+                if (CurrentWeight >= PLAYER_XL_WEIGHT)
+                    return "Player";
+                else if (CurrentWeight <= PLAYER_M_WEIGHT)
+                    return "Item";
+
+                break;
+
+            case "XL_Item":
+                if (CurrentWeight <= PLAYER_L_WEIGHT)
+                    return "Item";
+
+                break;
+        }
+
+
+        return "Same";
+    }
+
+    //（仮）　重さが変わったらプレイヤーの重さを変えたりするやつ
     private void CheckWeight()
     {
-        if (CurrentWeight >= 30)
+        if (CurrentWeight >= PLAYER_XL_WEIGHT)
         {
-            PlayerStatus = Size.TOKUDAI;
+            PlayerStatus = Size.XL;
         }
-        else if (CurrentWeight >= 20)
+        else if (CurrentWeight >= PLAYER_L_WEIGHT)
         {
-            PlayerStatus = Size.DAI;
+            PlayerStatus = Size.L;
 
         }
-        else if (CurrentWeight >= 10)
+        else if (CurrentWeight >= PLAYER_M_WEIGHT)
         {
-            PlayerStatus = Size.CHU;
+            PlayerStatus = Size.M;
         }
         else
         {
-            PlayerStatus = Size.SHOU;
+            PlayerStatus = Size.S;
         }
     }
 
 
-    //（仮）
+    //（仮）アイテムの初期化
     private void ItemInit()
     {
-        item[(int)Size.SHOU].size = Size.SHOU;
-        item[(int)Size.SHOU].weight = 1;
-        item[(int)Size.SHOU].num = 0;
+        Item[(int)Size.S].size = Size.S;
+        Item[(int)Size.S].weight = 1;
+        Item[(int)Size.S].num = 0;
 
-        item[(int)Size.CHU].size = Size.CHU;
-        item[(int)Size.CHU].weight = 2;
-        item[(int)Size.CHU].num = 0;
+        Item[(int)Size.M].size = Size.M;
+        Item[(int)Size.M].weight = 2;
+        Item[(int)Size.M].num = 0;
 
-        item[(int)Size.DAI].size = Size.DAI;
-        item[(int)Size.DAI].weight = 3;
-        item[(int)Size.DAI].num = 0;
+        Item[(int)Size.L].size = Size.L;
+        Item[(int)Size.L].weight = 3;
+        Item[(int)Size.L].num = 0;
 
-        item[(int)Size.TOKUDAI].size = Size.TOKUDAI;
-        item[(int)Size.TOKUDAI].weight = 4;
-        item[(int)Size.TOKUDAI].num = 0;
+        Item[(int)Size.XL].size = Size.XL;
+        Item[(int)Size.XL].weight = 4;
+        Item[(int)Size.XL].num = 0;
 
     }
 
