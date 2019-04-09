@@ -8,10 +8,10 @@ public class Test_ItemManager : MonoBehaviour
 {
 
     const int CAPACITY = 40;
-    const int PLAYER_S_WEIGHT = 0;
-    const int PLAYER_M_WEIGHT = 10;
-    const int PLAYER_L_WEIGHT = 20;
-    const int PLAYER_XL_WEIGHT = 30;
+    const int PLAYER_WEIGHT_S = 0;
+    const int PLAYER_WEIGHT_M = 10;
+    const int PLAYER_WEIGHT_L = 20;
+    const int PLAYER_WEIGHT_XL = 30;
 
     public enum Size
     {
@@ -22,10 +22,14 @@ public class Test_ItemManager : MonoBehaviour
 
         MAX,
     }
-    Size PlayerStatus = Size.M;
+
 
     int CurrentWeight = 0;
 
+    Size PlayerWeightSize = Size.M;
+    Size PlayerPower = Size.M;
+
+    //Size WeightGroup=
 
     public struct ITEM
     {
@@ -34,7 +38,6 @@ public class Test_ItemManager : MonoBehaviour
         public int num;
     }
     ITEM[] Item = new ITEM[(int)Size.MAX];
-
 
 
 
@@ -175,29 +178,29 @@ public class Test_ItemManager : MonoBehaviour
         switch (tag)
         {
             case "S_Item":
-                if (CurrentWeight >= PLAYER_M_WEIGHT)
+                if (CurrentWeight >= PLAYER_WEIGHT_M)
                     return "Player";
                 else
                     return "Same";
 
             //break;
             case "M_Item":
-                if (CurrentWeight >= PLAYER_L_WEIGHT)
+                if (CurrentWeight >= PLAYER_WEIGHT_L)
                     return "Player";
-                else if (CurrentWeight <= PLAYER_S_WEIGHT)
+                else if (CurrentWeight <= PLAYER_WEIGHT_S)
                     return "Item";
                 break;
 
             case "L_Item":
-                if (CurrentWeight >= PLAYER_XL_WEIGHT)
+                if (CurrentWeight >= PLAYER_WEIGHT_XL)
                     return "Player";
-                else if (CurrentWeight <= PLAYER_M_WEIGHT)
+                else if (CurrentWeight <= PLAYER_WEIGHT_M)
                     return "Item";
 
                 break;
 
             case "XL_Item":
-                if (CurrentWeight <= PLAYER_L_WEIGHT)
+                if (CurrentWeight <= PLAYER_WEIGHT_L)
                     return "Item";
 
                 break;
@@ -210,24 +213,67 @@ public class Test_ItemManager : MonoBehaviour
     //（仮）　重さが変わったらプレイヤーの重さを変えたりするやつ
     private void CheckWeight()
     {
-        if (CurrentWeight >= PLAYER_XL_WEIGHT)
+        if (CurrentWeight >= PLAYER_WEIGHT_XL)
         {
-            PlayerStatus = Size.XL;
+            PlayerWeightSize = Size.XL;
         }
-        else if (CurrentWeight >= PLAYER_L_WEIGHT)
+        else if (CurrentWeight >= PLAYER_WEIGHT_L)
         {
-            PlayerStatus = Size.L;
+            PlayerWeightSize = Size.L;
 
         }
-        else if (CurrentWeight >= PLAYER_M_WEIGHT)
+        else if (CurrentWeight >= PLAYER_WEIGHT_M)
         {
-            PlayerStatus = Size.M;
+            PlayerWeightSize = Size.M;
         }
         else
         {
-            PlayerStatus = Size.S;
+            PlayerWeightSize = Size.S;
         }
     }
+
+
+    private void CheckPlayerPower()
+    {
+
+        int p = 1;
+
+        if (Item[(int)Size.S].num * p >= PLAYER_WEIGHT_XL)
+        {
+            PlayerPower = Size.XL;
+        }
+        else if (Item[(int)Size.S].num * p >= PLAYER_WEIGHT_L)
+        {
+            PlayerPower = Size.L;
+        }
+        else if(Item[(int)Size.S].num * p >= PLAYER_WEIGHT_M)
+        {
+           PlayerPower= Size.M;
+        }
+        else
+        {
+            PlayerPower = Size.S;
+        }
+
+        //PlayerPower = Item[(int)Size.S].num * p;
+
+
+
+
+    }
+
+
+
+    public bool CarryItem()
+    {
+        if (PlayerPower >= PlayerWeightSize)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
 
     //（仮）アイテムの初期化

@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 1877828439}
   - component: {fileID: 1877828438}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Ground_umitora
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
