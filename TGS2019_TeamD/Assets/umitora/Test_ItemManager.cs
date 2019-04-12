@@ -24,9 +24,9 @@ public class Test_ItemManager : MonoBehaviour
     }
 
 
-    int CurrentWeight = 0;
+    int PlayerWeight = 0;
 
-    Size PlayerWeightSize = Size.M;
+    Size PlayerWeightDivision = Size.M;
     Size PlayerPower = Size.M;
 
     //Size WeightGroup=
@@ -80,25 +80,25 @@ public class Test_ItemManager : MonoBehaviour
         {
             case "S_Item":
                 Item[(int)Size.S].num--;
-                CurrentWeight -= Item[(int)Size.S].weight;
+                PlayerWeight -= Item[(int)Size.S].weight;
 
                 break;
 
             case "M_Item":
                 Item[(int)Size.M].num--;
-                CurrentWeight -= Item[(int)Size.M].weight;
+                PlayerWeight -= Item[(int)Size.M].weight;
 
                 break;
 
             case "L_Item":
                 Item[(int)Size.L].num--;
-                CurrentWeight -= Item[(int)Size.L].weight;
+                PlayerWeight -= Item[(int)Size.L].weight;
 
                 break;
 
             case "XL_Item":
                 Item[(int)Size.XL].num--;
-                CurrentWeight -= Item[(int)Size.XL].weight;
+                PlayerWeight -= Item[(int)Size.XL].weight;
 
                 break;
         }
@@ -115,9 +115,9 @@ public class Test_ItemManager : MonoBehaviour
         {
             case "S_Item":
                 //int index = (int)Size.SHOU;
-                if (CurrentWeight + Item[(int)Size.S].weight <= CAPACITY)
+                if (PlayerWeight + Item[(int)Size.S].weight <= CAPACITY)
                 {
-                    CurrentWeight += Item[(int)Size.S].weight;
+                    PlayerWeight += Item[(int)Size.S].weight;
                     Item[(int)Size.S].num++;
                 }
                 else
@@ -126,9 +126,9 @@ public class Test_ItemManager : MonoBehaviour
                 break;
 
             case "M_Item":
-                if (CurrentWeight + Item[(int)Size.M].weight <= CAPACITY)
+                if (PlayerWeight + Item[(int)Size.M].weight <= CAPACITY)
                 {
-                    CurrentWeight += Item[(int)Size.M].weight;
+                    PlayerWeight += Item[(int)Size.M].weight;
                     Item[(int)Size.M].num++;
 
                 }
@@ -138,9 +138,9 @@ public class Test_ItemManager : MonoBehaviour
                 break;
 
             case "L_Item":
-                if (CurrentWeight + Item[(int)Size.L].weight <= CAPACITY)
+                if (PlayerWeight + Item[(int)Size.L].weight <= CAPACITY)
                 {
-                    CurrentWeight += Item[(int)Size.L].weight;
+                    PlayerWeight += Item[(int)Size.L].weight;
                     Item[(int)Size.L].num++;
 
                 }
@@ -150,9 +150,9 @@ public class Test_ItemManager : MonoBehaviour
                 break;
 
             case "XL_Item":
-                if (CurrentWeight + Item[(int)Size.XL].weight <= CAPACITY)
+                if (PlayerWeight + Item[(int)Size.XL].weight <= CAPACITY)
                 {
-                    CurrentWeight += Item[(int)Size.XL].weight;
+                    PlayerWeight += Item[(int)Size.XL].weight;
                     Item[(int)Size.XL].num++;
 
                 }
@@ -169,7 +169,11 @@ public class Test_ItemManager : MonoBehaviour
     //プレイヤーの重さを取得
     public int GetWeight()
     {
-        return CurrentWeight;
+        return PlayerWeight;
+    }
+    public Size GetWeightDivision()
+    {
+        return PlayerWeightDivision;
     }
 
     //もうなんか書くのめんどくなったけどプレイヤーとアイテムの重さを比較するやつ
@@ -178,29 +182,29 @@ public class Test_ItemManager : MonoBehaviour
         switch (tag)
         {
             case "S_Item":
-                if (CurrentWeight >= PLAYER_WEIGHT_M)
+                if (PlayerWeight >= PLAYER_WEIGHT_M)
                     return "Player";
                 else
                     return "Same";
 
             //break;
             case "M_Item":
-                if (CurrentWeight >= PLAYER_WEIGHT_L)
+                if (PlayerWeight >= PLAYER_WEIGHT_L)
                     return "Player";
-                else if (CurrentWeight <= PLAYER_WEIGHT_S)
+                else if (PlayerWeight <= PLAYER_WEIGHT_S)
                     return "Item";
                 break;
 
             case "L_Item":
-                if (CurrentWeight >= PLAYER_WEIGHT_XL)
+                if (PlayerWeight >= PLAYER_WEIGHT_XL)
                     return "Player";
-                else if (CurrentWeight <= PLAYER_WEIGHT_M)
+                else if (PlayerWeight <= PLAYER_WEIGHT_M)
                     return "Item";
 
                 break;
 
             case "XL_Item":
-                if (CurrentWeight <= PLAYER_WEIGHT_L)
+                if (PlayerWeight <= PLAYER_WEIGHT_L)
                     return "Item";
 
                 break;
@@ -211,24 +215,24 @@ public class Test_ItemManager : MonoBehaviour
     }
 
     //（仮）　重さが変わったらプレイヤーの重さを変えたりするやつ
-    private void CheckWeight()
+    private void CheckWeightDivision()
     {
-        if (CurrentWeight >= PLAYER_WEIGHT_XL)
+        if (PlayerWeight >= PLAYER_WEIGHT_XL)
         {
-            PlayerWeightSize = Size.XL;
+            PlayerWeightDivision = Size.XL;
         }
-        else if (CurrentWeight >= PLAYER_WEIGHT_L)
+        else if (PlayerWeight >= PLAYER_WEIGHT_L)
         {
-            PlayerWeightSize = Size.L;
+            PlayerWeightDivision = Size.L;
 
         }
-        else if (CurrentWeight >= PLAYER_WEIGHT_M)
+        else if (PlayerWeight >= PLAYER_WEIGHT_M)
         {
-            PlayerWeightSize = Size.M;
+            PlayerWeightDivision = Size.M;
         }
         else
         {
-            PlayerWeightSize = Size.S;
+            PlayerWeightDivision = Size.S;
         }
     }
 
@@ -266,7 +270,7 @@ public class Test_ItemManager : MonoBehaviour
 
     public bool CarryItem()
     {
-        if (PlayerPower >= PlayerWeightSize)
+        if (PlayerPower >= PlayerWeightDivision)
         {
             return true;
         }
