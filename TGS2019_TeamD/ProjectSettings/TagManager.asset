@@ -4,14 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-  - S
-=======
-  - S_Item
-  - M_Item
-  - L_Item
   - XL_Item
->>>>>>> master
+  - S_Item
+  - L_Item
+  - M_Item
   layers:
   - Default
   - TransparentFX
