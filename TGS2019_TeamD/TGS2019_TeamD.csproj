@@ -229,6 +229,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PlayerArm.cs" />
+    <Compile Include="Assets\PlayerCamera.cs" />
+    <Compile Include="Assets\PlayerController.cs" />
+    <Compile Include="Assets\PlayerHand.cs" />
     <Compile Include="Assets\umitora\GravityController.cs" />
     <Compile Include="Assets\umitora\Test_ItemManager.cs" />
   </ItemGroup>
