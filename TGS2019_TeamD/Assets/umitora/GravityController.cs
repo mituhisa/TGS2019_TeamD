@@ -7,7 +7,7 @@ public class GravityController : MonoBehaviour
 
     Rigidbody myRigidbody;
     Transform Planet;               //惑星
-    float accelerationScale = 5;      // 加速度の大きさ
+    float accelerationScale = 100;      // 加速度の大きさ
 
     Vector3 direction;  //惑星へのベクトル
 

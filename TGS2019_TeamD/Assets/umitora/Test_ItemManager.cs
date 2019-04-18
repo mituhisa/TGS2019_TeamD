@@ -7,12 +7,15 @@ using UnityEngine;
 public class Test_ItemManager : MonoBehaviour
 {
 
-    const int CAPACITY = 40;
+    const int CAPACITY = 40;    //アイテムを持てる最大の重量
+
+    //アイテムの重さの区分
     const int PLAYER_WEIGHT_S = 0;
     const int PLAYER_WEIGHT_M = 10;
     const int PLAYER_WEIGHT_L = 20;
     const int PLAYER_WEIGHT_XL = 30;
 
+    //区分
     public enum Size
     {
         S,
@@ -23,21 +26,38 @@ public class Test_ItemManager : MonoBehaviour
         MAX,
     }
 
-
-    int PlayerWeight = 0;
-
-    Size PlayerWeightDivision = Size.M;
-    Size PlayerPower = Size.M;
-
-    //Size WeightGroup=
-
+    //アイテムの構造体
     public struct ITEM
     {
-        public Size size;
-        public int weight;
-        public int num;
+        public Size size;       //重さ(size型)
+        public int weight;      //重さ(int)
+        public int num;         //個数
     }
     ITEM[] Item = new ITEM[(int)Size.MAX];
+
+
+
+
+    //*******************************いじってほしいとこ*******************************
+    int PlayerWeight = PLAYER_WEIGHT_M;     //プレイヤーの重さ(int)
+
+    Size PlayerWeightDivision;     //プレイやの重さ(Size型)
+    Size PlayerPowerDivision;      //プレイヤーのパワー(Size型)
+
+
+    float S_ItemPower=3;                    //S_Item一個のバフ
+
+
+
+
+
+
+
+
+
+
+    //string playerTag;
+    //string[] itemTag = new string[(int)Size.MAX];
 
 
 
@@ -46,8 +66,14 @@ public class Test_ItemManager : MonoBehaviour
     {
         ItemInit(); //アイテムの個数とか重さとかの初期化
 
+        CheckPlayerPowerDivision();
+        CheckPlayerWeightDivision();
 
-
+        //playerTag = "Player";
+        //itemTag[(int)Size.S] = "S_Item";
+        //itemTag[(int)Size.M] = "M_Item";
+        //itemTag[(int)Size.L] = "L_Item";
+        //itemTag[(int)Size.XL] = "XL_Item";
 
     }
 
@@ -55,126 +81,92 @@ public class Test_ItemManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    /***********************************************************************
+    **  private関数
+    ************************************************************************/
 
 
+    //（仮）アイテムの初期化       *******************************いじってほしいとこ*******************************
+    private void ItemInit()
+    {
+        Item[(int)Size.S].size = Size.S;
+        Item[(int)Size.S].weight = 1;
+        Item[(int)Size.S].num = 0;
 
+        Item[(int)Size.M].size = Size.M;
+        Item[(int)Size.M].weight = 2;
+        Item[(int)Size.M].num = 0;
+
+        Item[(int)Size.L].size = Size.L;
+        Item[(int)Size.L].weight = 3;
+        Item[(int)Size.L].num = 0;
+
+        Item[(int)Size.XL].size = Size.XL;
+        Item[(int)Size.XL].weight = 4;
+        Item[(int)Size.XL].num = 0;
 
     }
 
-    //アイテムそれぞれが何個あるか取得する
-    public void GetItemNum(ref int[] tmp)
+
+
+    //プレイヤーのsizeの重さを、intの重さによって変える
+    private void CheckPlayerWeightDivision()
     {
-        tmp[0] = Item[(int)Size.S].num;
-        tmp[1] = Item[(int)Size.M].num;
-        tmp[2] = Item[(int)Size.L].num;
-        tmp[3] = Item[(int)Size.XL].num;
-
-
-
-    }
-
-    //アイテムを出す
-    public void PopItem(string tag)
-    {
-        switch (tag)
+        if (PlayerWeight >= PLAYER_WEIGHT_XL)
         {
-            case "S_Item":
-                Item[(int)Size.S].num--;
-                PlayerWeight -= Item[(int)Size.S].weight;
+            PlayerWeightDivision = Size.XL;
+        }
+        else if (PlayerWeight >= PLAYER_WEIGHT_L)
+        {
+            PlayerWeightDivision = Size.L;
 
-                break;
+        }
+        else if (PlayerWeight >= PLAYER_WEIGHT_M)
+        {
+            PlayerWeightDivision = Size.M;
+        }
+        else
+        {
+            PlayerWeightDivision = Size.S;
+        }
+    }
 
-            case "M_Item":
-                Item[(int)Size.M].num--;
-                PlayerWeight -= Item[(int)Size.M].weight;
 
-                break;
 
-            case "L_Item":
-                Item[(int)Size.L].num--;
-                PlayerWeight -= Item[(int)Size.L].weight;
+    //プレイヤーのパワーをバフに応じて変える
+    private void CheckPlayerPowerDivision()
+    {
 
-                break;
-
-            case "XL_Item":
-                Item[(int)Size.XL].num--;
-                PlayerWeight -= Item[(int)Size.XL].weight;
-
-                break;
+        if (Item[(int)Size.S].num * S_ItemPower >= PLAYER_WEIGHT_XL)
+        {
+            PlayerPowerDivision = Size.XL;
+        }
+        else if (Item[(int)Size.S].num * S_ItemPower >= PLAYER_WEIGHT_L)
+        {
+            PlayerPowerDivision = Size.L;
+        }
+        else if(Item[(int)Size.S].num * S_ItemPower >= PLAYER_WEIGHT_M)
+        {
+           PlayerPowerDivision= Size.M;
+        }
+        else
+        {
+            PlayerPowerDivision = Size.S;
         }
 
 
-
-
-
-    }
-    //アイテムを入れる
-    public bool PushItem(string tag)
-    {
-        switch (tag)
-        {
-            case "S_Item":
-                //int index = (int)Size.SHOU;
-                if (PlayerWeight + Item[(int)Size.S].weight <= CAPACITY)
-                {
-                    PlayerWeight += Item[(int)Size.S].weight;
-                    Item[(int)Size.S].num++;
-                }
-                else
-                    return false;
-
-                break;
-
-            case "M_Item":
-                if (PlayerWeight + Item[(int)Size.M].weight <= CAPACITY)
-                {
-                    PlayerWeight += Item[(int)Size.M].weight;
-                    Item[(int)Size.M].num++;
-
-                }
-                else
-                    return false;
-
-                break;
-
-            case "L_Item":
-                if (PlayerWeight + Item[(int)Size.L].weight <= CAPACITY)
-                {
-                    PlayerWeight += Item[(int)Size.L].weight;
-                    Item[(int)Size.L].num++;
-
-                }
-                else
-                    return false;
-
-                break;
-
-            case "XL_Item":
-                if (PlayerWeight + Item[(int)Size.XL].weight <= CAPACITY)
-                {
-                    PlayerWeight += Item[(int)Size.XL].weight;
-                    Item[(int)Size.XL].num++;
-
-                }
-                else
-                    return false;
-
-                break;
-        }
-
-
-        return true;
     }
 
-    //プレイヤーの重さを取得
-    public int GetWeight()
-    {
-        return PlayerWeight;
-    }
-    public Size GetWeightDivision()
-    {
-        return PlayerWeightDivision;
-    }
+
+
+
+
+    /***********************************************************************
+    **  public関数
+    ************************************************************************/
+
 
     //もうなんか書くのめんどくなったけどプレイヤーとアイテムの重さを比較するやつ
     public string ComparisonWeight(string tag)
@@ -214,63 +206,134 @@ public class Test_ItemManager : MonoBehaviour
         return "Same";
     }
 
-    //（仮）　重さが変わったらプレイヤーの重さを変えたりするやつ
-    private void CheckWeightDivision()
-    {
-        if (PlayerWeight >= PLAYER_WEIGHT_XL)
-        {
-            PlayerWeightDivision = Size.XL;
-        }
-        else if (PlayerWeight >= PLAYER_WEIGHT_L)
-        {
-            PlayerWeightDivision = Size.L;
 
-        }
-        else if (PlayerWeight >= PLAYER_WEIGHT_M)
+
+    //アイテムを入れる
+    public bool PushItem(string tag)
+    {
+        bool bReturn=false;
+
+        switch (tag)
         {
-            PlayerWeightDivision = Size.M;
+            case "S_Item":
+                if (PlayerWeight + Item[(int)Size.S].weight <= CAPACITY)
+                {
+                    PlayerWeight += Item[(int)Size.S].weight;
+                    Item[(int)Size.S].num++;
+                    bReturn = true;
+                }
+
+                break;
+
+            case "M_Item":
+                if (PlayerWeight + Item[(int)Size.M].weight <= CAPACITY)
+                {
+                    PlayerWeight += Item[(int)Size.M].weight;
+                    Item[(int)Size.M].num++;
+                    bReturn = true;
+                }
+
+                break;
+
+            case "L_Item":
+                if (PlayerWeight + Item[(int)Size.L].weight <= CAPACITY)
+                {
+                    PlayerWeight += Item[(int)Size.L].weight;
+                    Item[(int)Size.L].num++;
+                    bReturn = true;
+                }
+
+                break;
+
+            case "XL_Item":
+                if (PlayerWeight + Item[(int)Size.XL].weight <= CAPACITY)
+                {
+                    PlayerWeight += Item[(int)Size.XL].weight;
+                    Item[(int)Size.XL].num++;
+                    bReturn = true;
+                }
+
+                break;
+        }
+
+        if (bReturn)
+        {
+            CheckPlayerPowerDivision();
+            CheckPlayerWeightDivision();
+            return true;
         }
         else
         {
-            PlayerWeightDivision = Size.S;
+            return false;
         }
+        
     }
 
 
-    private void CheckPlayerPower()
+
+    //アイテムを出す
+    public bool PopItem(string tag)
     {
+        bool bReturn=false;
+        switch (tag)
+        {
+            case "S_Item":
+                if (Item[(int)Size.S].num >= 1)
+                {
+                    Item[(int)Size.S].num--;
+                    PlayerWeight -= Item[(int)Size.S].weight;
+                    bReturn = true;
+                }
 
-        int p = 1;
+                break;
 
-        if (Item[(int)Size.S].num * p >= PLAYER_WEIGHT_XL)
-        {
-            PlayerPower = Size.XL;
+            case "M_Item":
+                if (Item[(int)Size.M].num >= 1)
+                {
+                    Item[(int)Size.M].num--;
+                    PlayerWeight -= Item[(int)Size.M].weight;
+                    bReturn = true;
+                }
+
+                break;
+
+            case "L_Item":
+                if (Item[(int)Size.L].num >= 1)
+                {
+                    Item[(int)Size.L].num--;
+                    PlayerWeight -= Item[(int)Size.L].weight;
+                    bReturn = true;
+                }
+
+                break;
+
+            case "XL_Item":
+                if (Item[(int)Size.XL].num >= 1)
+                {
+                    Item[(int)Size.XL].num--;
+                    PlayerWeight -= Item[(int)Size.XL].weight;
+                    bReturn = true;
+                }
+
+                break;
         }
-        else if (Item[(int)Size.S].num * p >= PLAYER_WEIGHT_L)
+        if (bReturn)
         {
-            PlayerPower = Size.L;
-        }
-        else if(Item[(int)Size.S].num * p >= PLAYER_WEIGHT_M)
-        {
-           PlayerPower= Size.M;
+            CheckPlayerPowerDivision();
+            CheckPlayerWeightDivision();
+            return true;
         }
         else
         {
-            PlayerPower = Size.S;
+            return false;
         }
-
-        //PlayerPower = Item[(int)Size.S].num * p;
-
-
-
 
     }
 
-
-
-    public bool CarryItem()
+    //Sizeでプレイヤーのパワーと重さを比較して持てるか取得する
+    public bool CanCarryItem()
     {
-        if (PlayerPower >= PlayerWeightDivision)
+        if (PlayerPowerDivision >= PlayerWeightDivision)
         {
             return true;
         }
@@ -278,27 +341,31 @@ public class Test_ItemManager : MonoBehaviour
         return false;
     }
 
-
-
-    //（仮）アイテムの初期化
-    private void ItemInit()
+    //プレイヤーの重さをintで取得
+    public int GetWeight()
     {
-        Item[(int)Size.S].size = Size.S;
-        Item[(int)Size.S].weight = 1;
-        Item[(int)Size.S].num = 0;
+        return PlayerWeight;
+    }
+    //プレイヤーの重さをSizeで取得
+    public Size GetWeightDivision()
+    {
+        return PlayerWeightDivision;
+    }
 
-        Item[(int)Size.M].size = Size.M;
-        Item[(int)Size.M].weight = 2;
-        Item[(int)Size.M].num = 0;
 
-        Item[(int)Size.L].size = Size.L;
-        Item[(int)Size.L].weight = 3;
-        Item[(int)Size.L].num = 0;
+    //アイテムそれぞれが何個あるか取得する
+    public void GetItemNum(ref int[] tmp)
+    {
+        tmp[0] = Item[(int)Size.S].num;
+        tmp[1] = Item[(int)Size.M].num;
+        tmp[2] = Item[(int)Size.L].num;
+        tmp[3] = Item[(int)Size.XL].num;
 
-        Item[(int)Size.XL].size = Size.XL;
-        Item[(int)Size.XL].weight = 4;
-        Item[(int)Size.XL].num = 0;
+
 
     }
+
+
+
 
 }
