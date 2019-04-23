@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerController_umitora : MonoBehaviour
 {
 
-    GravityController gravityController;
+    //GravityController gravityController;
 
-    float speed = 10;
+    Transform Planet;
+
+    float speed = 100;
     float currentAngle = 0;
 
 
@@ -15,8 +17,8 @@ public class PlayerController_umitora : MonoBehaviour
     void Start()
     {
 
-        gravityController = GetComponent<GravityController>();
-
+        //gravityController = GetComponent<GravityController>();
+        Planet = GameObject.Find("Ground2_umitora").GetComponent<Transform>();
 
 
 
@@ -75,10 +77,15 @@ public class PlayerController_umitora : MonoBehaviour
 
 
 
-        Vector3 direction = gravityController.GetDirection();
+        //Vector3 direction = gravityController.GetDirection();
 
-        transform.up = -direction;
-        transform.localRotation = Quaternion.AngleAxis(currentAngle, transform.up);
+        Vector3 direction = transform.position - Planet.position;
+        //transform.up = direction;
+        //transform.Rotate(0, 1, 0);
+        //transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+        //transform.eulerAngles = new Vector3(0, 0, 0);
+        //transform.rotation = Quaternion.AngleAxis(currentAngle, new Vector3(0, 1, 0));
+        //transform.localRotation = Quaternion.AngleAxis(currentAngle, transform.up);
         //transform.rotation = new Quaternion(0, 0, 0, 1);
         //Debug.Log("rotation " + transform.rotation);
         //Debug.Log("quaternion " + Quaternion.AngleAxis(currentAngle, -direction));
@@ -99,7 +106,7 @@ public class PlayerController_umitora : MonoBehaviour
 
         //transform.rotation = Quaternion.LookRotation(direction,);
 
-        Debug.DrawRay(transform.position, direction.normalized*5, Color.red, 5);
+        Debug.DrawRay(transform.position, direction.normalized*3, Color.red, 5);
 
         //transform.LookAt(GameObject.Find("Ground2_umitora").GetComponent<Transform>().position);
         //transform.LookAt(GameObject.Find("Ground2_umitora").GetComponent<Transform>().position,direction*-1);
