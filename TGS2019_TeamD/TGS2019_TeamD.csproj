@@ -220,6 +220,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Roket\RocketMove.cs" />
+    <Compile Include="Assets\Rubble\ObjectRandomSpawn.cs" />
+    <Compile Include="Assets\Rubble\RubbleCreate.cs" />
+    <Compile Include="Assets\Rubble\RubbleGravity.cs" />
+    <Compile Include="Assets\Rubble\RubbleMove.cs" />
     <Compile Include="Assets\umitora\GravityController.cs" />
     <Compile Include="Assets\umitora\PlayerController_umitora.cs" />
     <Compile Include="Assets\umitora\Test_ItemManager.cs" />

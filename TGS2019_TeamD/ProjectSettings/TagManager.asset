@@ -8,6 +8,7 @@ TagManager:
   - M_Item
   - L_Item
   - XL_Item
+  - Planet
   layers:
   - Default
   - TransparentFX

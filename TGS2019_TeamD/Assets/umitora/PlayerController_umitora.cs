@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerController_umitora : MonoBehaviour
 {
+    public GameObject Planet;
+    [SerializeField] private Vector3 velocity;
+    [SerializeField] private float movespeed = 5.0f;
 
+    //public Transform Planet;
     GravityController gravityController;
 
     float speed = 10;
@@ -19,7 +23,6 @@ public class PlayerController_umitora : MonoBehaviour
 
 
 
-
     }
 
 
@@ -30,18 +33,28 @@ public class PlayerController_umitora : MonoBehaviour
 
         //transform.Rotate(0, 10, 0);
 
-
-
+        if (Input.GetKey(KeyCode.D))
+        {
+            this.transform.Rotate(new Vector3(0, -5f, 0));
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            this.transform.Rotate(new Vector3(0, 5f, 0));
+        }
     }
 
     private void FixedUpdate()
     {
         //移動
-        float vertical = Input.GetAxis("Vertical");
-        float horizontal = Input.GetAxis("Horizontal");
-        Vector3 forward = transform.forward * vertical * speed;
-        Vector3 right = transform.right * horizontal * speed;
-        transform.localPosition += (forward + right) * Time.deltaTime;
+        // float vertical = Input.GetAxis("Vertical");
+        // float horizontal = Input.GetAxis("Horizontal");
+        //  Vector3 forward = transform.forward * vertical * speed;
+        //  Vector3 right = transform.right * horizontal * speed;
+        //  transform.localPosition += (forward + right) * Time.deltaTime;
+        if (Input.GetKey(KeyCode.W))
+        {
+            
+        }
 
 
         //float mouseX = Input.GetAxis("Mouse X");
@@ -77,8 +90,15 @@ public class PlayerController_umitora : MonoBehaviour
 
         Vector3 direction = gravityController.GetDirection();
 
-        transform.up = -direction;
-        transform.localRotation = Quaternion.AngleAxis(currentAngle, transform.up);
+        //transform.up = -direction;
+        //Debug.Log("Y軸" + transform.up);
+        //Debug.Log("ディレクション" + (-direction));
+        //transform.localRotation = Quaternion.AngleAxis(currentAngle, transform.up); ←　これもだめだった
+
+        //Vector3 vec = Planet.position - transform.position;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(vec.x, 0, vec.z)), 0.05f);　 ←この処理だと不可能だった
+
+
         //transform.rotation = new Quaternion(0, 0, 0, 1);
         //Debug.Log("rotation " + transform.rotation);
         //Debug.Log("quaternion " + Quaternion.AngleAxis(currentAngle, -direction));
