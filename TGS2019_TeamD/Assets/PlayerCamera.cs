@@ -25,16 +25,16 @@ public class PlayerCamera : MonoBehaviour
         // targetの移動量分、自分（カメラ）も移動する
         transform.position += player.transform.position - targetPos;
         targetPos = player.transform.position;
-        if (!player.GetComponent<PlayerController>().CheckFlg)
-        {
-            // マウスの移動量
-            float mouseInputX = Input.GetAxis("Mouse X");
-            float mouseInputY = Input.GetAxis("Mouse Y");
-            // targetの位置のY軸を中心に、回転（公転）する
-            transform.RotateAround(targetPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
-            // カメラの垂直移動
-            transform.RotateAround(targetPos, transform.right, mouseInputY * Time.deltaTime * 200f);
-        }
+        //if (!player.GetComponent<PlayerController>().CheckFlg)
+        //{
+        //    // マウスの移動量
+        //    float mouseInputX = Input.GetAxis("Mouse X");
+        //    float mouseInputY = Input.GetAxis("Mouse Y");
+        //    // targetの位置のY軸を中心に、回転（公転）する
+        //    transform.RotateAround(targetPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
+        //    // カメラの垂直移動
+        //    transform.RotateAround(targetPos, transform.right, mouseInputY * Time.deltaTime * 200f);
+        //}
 
         if (Input.GetMouseButtonDown(0) && RayHitFlg && Hand.GetComponent<PlayerHand>().state == PlayerHand.State.Normal)
         {
@@ -47,12 +47,22 @@ public class PlayerCamera : MonoBehaviour
         {
             Ray();
         }
+
+        // マウスの移動量
+            float mouseInputX = Input.GetAxis("Mouse X");
+            float mouseInputY = Input.GetAxis("Mouse Y");
+            // targetの位置のY軸を中心に、回転（公転）する
+            transform.RotateAround(targetPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
+            // カメラの垂直移動
+            transform.RotateAround(targetPos, transform.right, mouseInputY * Time.deltaTime * 200f);
+
     }
 
     void Ray()
     {
         Vector3 center = new Vector3(Screen.width / 2, Screen.height / 2);
         Ray ray = Camera.main.ScreenPointToRay(center);
+        Debug.Log(ray.direction);
         int distance = 30;
         Debug.DrawLine(ray.origin, ray.direction * distance, Color.red);
         if (Physics.Raycast(ray, out hit, 30.0f))

@@ -20,14 +20,13 @@ public class PlayerHand : MonoBehaviour {
     [HideInInspector] public bool firingFlg = false;
     [HideInInspector] public Vector3 targetPos;
 
-    [SerializeField] public GameObject text;
-    [SerializeField] public GameObject player;
+    public GameObject text;
+    public GameObject player;
 
     // Use this for initialization
     void Start () {
         InitPos = transform.localPosition;
         InitRot = transform.localRotation;
-        Debug.Log(InitPos);
         state = State.Normal;
     }
 	
@@ -38,43 +37,53 @@ public class PlayerHand : MonoBehaviour {
         {
             case State.Firing:
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 0.8f);
+                Debug.Log(targetPos);
                 speed += -Time.deltaTime * 10.0f;
                 break;
             case State.Landing:
                 if (Input.GetMouseButtonDown(0))
                 {
                     transform.parent = null;
+                    text.SetActive(false);
                     state = State.Pull;
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
+                    text.SetActive(false);
                     state = State.Return;
                 }
                 break;
             case State.Return:
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, InitPos, speed * Time.deltaTime * 0.8f);
-                ItemObj.transform.position = transform.position;
+                ItemObj.transform.parent = this.gameObject.transform;
                 speed += -Time.deltaTime * 10.0f;
                 text.SetActive(false);
-                if (transform.localPosition == InitPos) state = State.Normal;
+                if (transform.localPosition == InitPos)
+                {
+                    Destroy(ItemObj);
+                    speed = 30.0f;
+                    state = State.Normal;
+                }
                 break;
             case State.Pull:
                 player.transform.position = Vector3.MoveTowards(player.transform.position, transform.position, speed * Time.deltaTime * 0.8f);
-                if (player.transform.position == transform.position)
+                float dis = Vector3.Distance(transform.position, player.transform.position);
+                if (dis < 1.405f)
                 {
                     transform.parent = GameObject.Find("Player").transform;
                     transform.localPosition = InitPos;
+                    speed = 30.0f;
                     state = State.Normal;
                 }
-                text.SetActive(false);
+                Debug.Log(dis);
                 break;
             case State.Normal:
                 transform.localPosition = InitPos;
                 transform.localRotation = InitRot;
-                player.GetComponent<PlayerController>().CheckFlg = false;
+                player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 break;
         }
-        //Debug.Log(state);
+        Debug.Log(state);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -84,10 +93,7 @@ public class PlayerHand : MonoBehaviour {
             speed = 30.0f;
             state = State.Landing;
             text.SetActive(true);
-        }
-        else
-        {
-
+            Debug.Log("touch");
         }
        
         if(other.tag == "S_Item" || other.tag == "M_Item" || other.tag == "L_Item" || other.tag == "XL_Item")

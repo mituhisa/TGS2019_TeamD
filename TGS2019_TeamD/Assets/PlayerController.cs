@@ -28,10 +28,6 @@ public class PlayerController : MonoBehaviour {
 
             transform.localRotation = Quaternion.LookRotation(Center.transform.position - transform.position);
         }
-        else
-        {
-            
-        }
     }
 
     void FixedUpdate()
@@ -43,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         Vector3 moveForward = cameraForward * inputVertical + Camera.main.transform.right * inputHorizontal;
 
         // 移動方向にスピードを掛ける。ジャンプや落下がある場合は、別途Y軸方向の速度ベクトルを足す。
-        rb.velocity = moveForward * moveSpeed + new Vector3(0, rb.velocity.y, 0);
+        rb.velocity = moveForward * moveSpeed + new Vector3(0, 0, 0);
 
 
         // キャラクターの向きを進行方向に
