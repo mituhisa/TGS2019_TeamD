@@ -26,7 +26,7 @@ public class Test02 : MonoBehaviour {
             angle += 1;
 
             //transform.rotation = Quaternion.AngleAxis(angle,transform.up);
-            transform.Rotate(transform.up, 1);
+            //transform.Rotate(transform.up, 1);
             //transform.Rotate(new Vector3(0,1,0), 1);
         }
 
@@ -35,8 +35,8 @@ public class Test02 : MonoBehaviour {
         //Debug.DrawRay(transform.position, transform.up * 5, Color.yellow, 3);
 
 
-        Debug.Log("local up " + transform.up);
-        Debug.Log("world up " +transform.TransformDirection( transform.up));
+        //Debug.Log("local up " + transform.up);
+        //Debug.Log("world up " +transform.TransformDirection( transform.up));
 
     }
 

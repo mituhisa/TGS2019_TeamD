@@ -6,7 +6,7 @@ public class PlayerController2_umitora : MonoBehaviour {
 
 
 
-    float speed = 100;
+    float speed = 20;
 
 
 
@@ -46,7 +46,7 @@ public class PlayerController2_umitora : MonoBehaviour {
 
 
         Transform mainCamera = Camera.main.transform;
-        Vector3 diff = (mainCamera.forward * zAxis + mainCamera.right * xAxis);
+        Vector3 diff = (mainCamera.up * zAxis + mainCamera.right * xAxis);
         diff.Normalize();
         diff = transform.InverseTransformDirection(diff);
         diff.y = 0;
@@ -56,10 +56,16 @@ public class PlayerController2_umitora : MonoBehaviour {
         transform.Translate(new Vector3(0, 0, speed* (Mathf.Abs(xAxis) + Mathf.Abs(zAxis))) * Time.deltaTime, Space.Self);
 
 
+        //RaycastHit hitGround;
+        //if(!Physics.Raycast(transform.position,down,out hitGround, 2))
+        //{
+        //    transform.Translate(0,- 1 * Time.deltaTime, 0,Space.Self);
+        //}
+        //transform.Translate(0, -5*Time.deltaTime, 0, Space.Self);
 
 
 
-	}
+    }
 
 
 

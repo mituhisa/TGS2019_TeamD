@@ -19,15 +19,18 @@ public class CreateStage_umitora : MonoBehaviour {
 
     GameObject[] Prefab= new GameObject[(int)PREFAB_NAME.MAX];
 
-    Transform Planet;
+    Transform Planet;       //惑星の座標
 
 
 	// Use this for initialization
 	void Start () {
 
-        Prefab[(int)PREFAB_NAME.CUBE] = Resources.Load("Prefab/CubePrefab") as GameObject;
+        //プレハブを格納
         //Prefab = Resources.Load("Prefab/M_Item") as GameObject;
+
+        Prefab[(int)PREFAB_NAME.CUBE] = Resources.Load("Prefab/CubePrefab") as GameObject;
         Prefab[(int)PREFAB_NAME.SPHERE] = Resources.Load("Prefab/SpherePrefab") as GameObject;
+
         Planet = GameObject.Find("Ground2_umitora").GetComponent<Transform>();
 
 

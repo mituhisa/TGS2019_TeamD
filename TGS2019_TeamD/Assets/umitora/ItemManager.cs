@@ -4,7 +4,7 @@ using UnityEngine;
 
 //using static;
 
-public class Test_ItemManager : MonoBehaviour
+public class ItemManager : MonoBehaviour
 {
 
     const int CAPACITY = 40;    //アイテムを持てる最大の重量
@@ -38,8 +38,7 @@ public class Test_ItemManager : MonoBehaviour
 
 
 
-    //*******************************いじってほしいとこ*******************************
-    int PlayerWeight = PLAYER_WEIGHT_M;     //プレイヤーの重さ(int)
+    int PlayerWeight = 0;     //プレイヤーの重さ(int)
 
     Size PlayerWeightDivision;     //プレイやの重さ(Size型)
     Size PlayerPowerDivision;      //プレイヤーのパワー(Size型)
@@ -53,21 +52,11 @@ public class Test_ItemManager : MonoBehaviour
 
 
 
-
-
-
-    //string playerTag;
-    //string[] itemTag = new string[(int)Size.MAX];
-
-
-
     // Use this for initialization
     void Start()
     {
         ItemInit(); //アイテムの個数とか重さとかの初期化
 
-        CheckPlayerPowerDivision();
-        CheckPlayerWeightDivision();
 
         //playerTag = "Player";
         //itemTag[(int)Size.S] = "S_Item";
@@ -93,7 +82,7 @@ public class Test_ItemManager : MonoBehaviour
     {
         Item[(int)Size.S].size = Size.S;
         Item[(int)Size.S].weight = 1;
-        Item[(int)Size.S].num = 0;
+        Item[(int)Size.S].num = 5;
 
         Item[(int)Size.M].size = Size.M;
         Item[(int)Size.M].weight = 2;
@@ -105,8 +94,18 @@ public class Test_ItemManager : MonoBehaviour
 
         Item[(int)Size.XL].size = Size.XL;
         Item[(int)Size.XL].weight = 4;
-        Item[(int)Size.XL].num = 0;
+        Item[(int)Size.XL].num = 5;
+                                        //***************************************************************************
 
+
+
+        foreach(ITEM i in Item)
+        {
+            PlayerWeight += i.weight * i.num;
+        }
+
+        CheckPlayerWeightDivision();
+        CheckPlayerPowerDivision();
     }
 
 
@@ -341,30 +340,32 @@ public class Test_ItemManager : MonoBehaviour
         return false;
     }
 
-    //プレイヤーの重さをintで取得
-    public int GetWeight()
+    //プレイヤーの重さを割合で取得
+    public float GetWeightRatio()
     {
-        return PlayerWeight;
+        return (float)PlayerWeight/CAPACITY;
     }
     //プレイヤーの重さをSizeで取得
     public Size GetWeightDivision()
     {
         return PlayerWeightDivision;
     }
+    //プレイヤーのパワーを割合で取得
+    public float GetPowerRatio()
+    {
+        return  Item[(int)Size.S].num * S_ItemPower/40;//*********************************************************
+    }
 
 
     //アイテムそれぞれが何個あるか取得する
-    public void GetItemNum(ref int[] tmp)
+    public void GetItemNum(out int[] tmp)
     {
-        tmp[0] = Item[(int)Size.S].num;
-        tmp[1] = Item[(int)Size.M].num;
-        tmp[2] = Item[(int)Size.L].num;
-        tmp[3] = Item[(int)Size.XL].num;
-
-
-
+        tmp = new int[4];
+        tmp[(int)Size.S] = Item[(int)Size.S].num;
+        tmp[(int)Size.M] = Item[(int)Size.M].num;
+        tmp[(int)Size.L] = Item[(int)Size.L].num;
+        tmp[(int)Size.XL] = Item[(int)Size.XL].num;
     }
-
 
 
 
