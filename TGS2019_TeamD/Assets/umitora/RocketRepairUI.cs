@@ -129,7 +129,8 @@ public class RocketRepairUI : MonoBehaviour
                 RocketdayoText.enabled= true;           //ロケットだよのテキスト表示
                 PlayerdayoText.enabled = true;          //プレイヤーだよのテキスト表示
                 RocketRepairImage.SetActive(true);      //ロケット修理の画面表示
-                StartCoroutine(cDisplayRocketRepair);   //ロケット修理の画面表示するコルーチン
+                //StartCoroutine(cDisplayRocketRepair);   //ロケット修理の画面表示するコルーチン
+                StartCoroutine(DisplayRocketRepair());
             }
 
             if (Input.GetKeyDown(KeyCode.L) && isRepairDisplay)     //
@@ -140,7 +141,7 @@ public class RocketRepairUI : MonoBehaviour
                 PlayerdayoText.enabled = false;
 
                 RocketRepairImage.SetActive(false);
-                StopCoroutine(cDisplayRocketRepair);
+                //StopCoroutine(cDisplayRocketRepair);
             }
         }
 
@@ -169,7 +170,9 @@ public class RocketRepairUI : MonoBehaviour
         while (true)
         {
            GameObject pushButton = EventSystem.current.currentSelectedGameObject;
-            //Debug.Log(pushButton);
+            Debug.Log(pushButton);
+            if(pushButton==null)
+                pushButton=GameObject.Find("Player_S_Item");
             if (pushButton != null)
             {
                 Button = pushButton;
@@ -210,7 +213,7 @@ public class RocketRepairUI : MonoBehaviour
 
             //ボタンを決定したときのやつ
 
-                if (Input.GetKeyDown(KeyCode.K))
+            else if (Input.GetKeyDown(KeyCode.K))
             {
                 switch (Button.name)
                 {
