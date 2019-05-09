@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/umitora/TestScene_umitora.unity
+- path: Assets/Scene/SceneMain.unity
   isLoaded: 1
   isActive: 1

@@ -22,6 +22,7 @@ public class PlayerHand : MonoBehaviour {
 
     public GameObject text;
     public GameObject player;
+    public UIscript Ui;
 
     // Use this for initialization
     void Start () {
@@ -38,7 +39,7 @@ public class PlayerHand : MonoBehaviour {
             case State.Firing:
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 0.8f);
                 Debug.Log(targetPos);
-                speed += -Time.deltaTime * 10.0f;
+                //speed += -Time.deltaTime * 10.0f;
                 break;
             case State.Landing:
                 if (Input.GetMouseButtonDown(0))
@@ -56,11 +57,11 @@ public class PlayerHand : MonoBehaviour {
             case State.Return:
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, InitPos, speed * Time.deltaTime * 0.8f);
                 ItemObj.transform.parent = this.gameObject.transform;
-                speed += -Time.deltaTime * 10.0f;
+                //speed += -Time.deltaTime * 10.0f;
                 text.SetActive(false);
                 if (transform.localPosition == InitPos)
                 {
-                    Destroy(ItemObj);
+                    ItemCnt(ItemObj);
                     speed = 30.0f;
                     state = State.Normal;
                 }
@@ -100,5 +101,24 @@ public class PlayerHand : MonoBehaviour {
         {
             ItemObj = other.gameObject;
         }
+    }
+
+    void ItemCnt(GameObject Item)
+    {
+        if(Item.tag == "XL_Item")
+        {
+            Ui.xl++;
+        }
+        else if(Item.tag == "L_Item")
+        {
+            Ui.l++;
+        }else if(Item.tag == "M_Item")
+        {
+            Ui.m++;
+        }else if(Item.tag == "S_Item")
+        {
+            Ui.s++;
+        }
+        Destroy(Item);
     }
 }
