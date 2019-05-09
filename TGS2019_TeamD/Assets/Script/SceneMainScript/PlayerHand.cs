@@ -39,7 +39,7 @@ public class PlayerHand : MonoBehaviour {
             case State.Firing:
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 0.8f);
                 Debug.Log(targetPos);
-                speed += -Time.deltaTime * 10.0f;
+                //speed += -Time.deltaTime * 10.0f;
                 break;
             case State.Landing:
                 if (Input.GetMouseButtonDown(0))
@@ -57,7 +57,7 @@ public class PlayerHand : MonoBehaviour {
             case State.Return:
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, InitPos, speed * Time.deltaTime * 0.8f);
                 ItemObj.transform.parent = this.gameObject.transform;
-                speed += -Time.deltaTime * 10.0f;
+                //speed += -Time.deltaTime * 10.0f;
                 text.SetActive(false);
                 if (transform.localPosition == InitPos)
                 {
