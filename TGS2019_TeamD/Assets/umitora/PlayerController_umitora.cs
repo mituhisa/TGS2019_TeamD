@@ -31,7 +31,16 @@ public class PlayerController_umitora : MonoBehaviour
     {
 
         //transform.Rotate(0, 10, 0);
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+           //GameObject.Find("UIManager").GetComponent<UIManager>().DisplayPlayerItemNum(true);
 
+        }
+        else
+        {
+
+        }
+            //GameObject.Find("UIManager").GetComponent<UIManager>().DisplayPlayerItemNum(false);
 
 
     }

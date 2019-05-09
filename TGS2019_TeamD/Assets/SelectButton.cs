@@ -41,32 +41,35 @@ public class SelectButton : MonoBehaviour {
          * 一つ前に選択していたボタンのエフェクトを非表示にさせる
          *-----------------------------------------------------------------------------------------
          */
-        if (Button != ButtonBuf) {
-            int j = 0;
-            /*
-             * 選択中のボタンの子要素を取得(1番目の要素は文字なので飛ばす)
-             */
-            foreach (Transform child in Button.transform) {
-                ButtonEffect[j] = child.gameObject;
-                if (j > 0) ButtonEffect[j].SetActive(true);
-                j++;
-            }
-            j=0;
-            /*
-             * 一つ前にに選択していたボタンの子要素を取得(1番目の要素は文字なので飛ばす)
-             */
-            foreach (Transform child in ButtonBuf.transform) {
-                ButtonEffect[j] = child.gameObject;
-                if (j > 0) ButtonEffect[j].SetActive(false);
-                j++;
-            }
+            if (Button != ButtonBuf)
+            {
+                int j = 0;
+                /*
+                 * 選択中のボタンの子要素を取得(1番目の要素は文字なので飛ばす)
+                 */
+                foreach (Transform child in Button.transform)
+                {
+                    ButtonEffect[j] = child.gameObject;
+                    if (j > 0) ButtonEffect[j].SetActive(true);
+                    j++;
+                }
+                j = 0;
+                /*
+                 * 一つ前にに選択していたボタンの子要素を取得(1番目の要素は文字なので飛ばす)
+                 */
+                foreach (Transform child in ButtonBuf.transform)
+                {
+                    ButtonEffect[j] = child.gameObject;
+                    if (j > 0) ButtonEffect[j].SetActive(false);
+                    j++;
+                }
 
 
+            /*
+             * 現在選択されているボタンをButtonBufに代入(現在のボタンを一つ前に選択していたボタンに設定する)
+             */
+            ButtonBuf = Button;
         }
-        /*
-         * 現在選択されているボタンをButtonBufに代入(現在のボタンを一つ前に選択していたボタンに設定する)
-         */
-        ButtonBuf = Button;
     }
 }
 

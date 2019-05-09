@@ -30,7 +30,10 @@ public class UIscript : MonoBehaviour
 
 
 
-    ItemManager myItemManager;      //*************************************************************
+    PlayerItemManager myPlayerItemManager;      //*************************************************************
+    RocketRepair myRocketRepair;
+
+
 
 
     void Start()
@@ -40,13 +43,18 @@ public class UIscript : MonoBehaviour
         Buff_slider = GameObject.Find("Buff_Gauge").GetComponent<Slider>();
         Weight_slider = GameObject.Find("Weight_Gauge").GetComponent<Slider>();
 
+        Buff_slider.enabled = false;
+        Weight_slider.enabled = false;
+
+
 
         S_text = GameObject.Find("S_Count").GetComponent<Text>();
         M_text = GameObject.Find("M_Count").GetComponent<Text>();
         L_text = GameObject.Find("L_Count").GetComponent<Text>();
         XL_text = GameObject.Find("XL_Count").GetComponent<Text>();
         timerText = GameObject.Find("Timer").GetComponent<Text>();
-        myItemManager =   GameObject.FindGameObjectWithTag("Player").GetComponent<ItemManager>();
+        myPlayerItemManager =   GameObject.Find("ItemManager").GetComponent<PlayerItemManager>();
+        myRocketRepair = GameObject.Find("ItemManager").GetComponent<RocketRepair>();
     }
 
     void Update()
@@ -90,15 +98,15 @@ public class UIscript : MonoBehaviour
         //Weight_slider.value += weightvalue;
 
 
-        int[] itemNum;
-        myItemManager.GetItemNum(out itemNum);
+        int[] itemNum;//*************************************************
+        myRocketRepair.GetItemNum(out itemNum);
         XL_text.text = itemNum[3].ToString() + "/2";
         L_text.text = itemNum[2].ToString() + "/5";
         M_text.text = itemNum[1].ToString() + "/10";
         S_text.text = itemNum[0].ToString() + "/20";
 
-        Buff_slider.value = myItemManager.GetPowerRatio();//******************************************************************************************************
-        Weight_slider.value = myItemManager.GetWeightRatio();
+        Buff_slider.value = myPlayerItemManager.GetPowerRatio();//******************************************************************************************************
+        Weight_slider.value = myPlayerItemManager.GetWeightRatio();
 
 
 
