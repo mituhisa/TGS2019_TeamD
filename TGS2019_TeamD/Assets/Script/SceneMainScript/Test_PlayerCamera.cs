@@ -6,15 +6,21 @@ public class Test_PlayerCamera : MonoBehaviour {
 
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject Hand;
+    [SerializeField] public GameObject Right;
+    [SerializeField] public GameObject Left;
     [SerializeField] public GameObject LockOnMarker;
 
     Vector3 targetPos;
     private bool RayHitFlg = false;
     RaycastHit hit;
 
+    private Transform InitParentR;
+    private Transform InitParentL;
+
     // Use this for initialization
     void Start () {
-        
+        InitParentR = Right.transform.parent;
+        InitParentL = Left.transform.parent;
 	}
 
     // Update is called once per frame
@@ -22,6 +28,8 @@ public class Test_PlayerCamera : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && RayHitFlg && Hand.GetComponent<PlayerHand>().state == PlayerHand.State.Normal)
         {
+            Right.transform.parent = Hand.transform;
+            Left.transform.parent = Hand.transform;
             Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
             Hand.GetComponent<PlayerHand>().targetPos = hit.point;
             Debug.Log(hit.point);
@@ -30,6 +38,12 @@ public class Test_PlayerCamera : MonoBehaviour {
         else
         {
             Ray();
+        }
+
+        if(Hand.GetComponent<PlayerHand>().state == PlayerHand.State.Normal)
+        {
+            Right.transform.parent = InitParentR;
+            Left.transform.parent = InitParentL;
         }
     }
 

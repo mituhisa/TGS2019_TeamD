@@ -12,6 +12,8 @@ public class UIscript : MonoBehaviour {
     [SerializeField]
     private float seconds;
 
+    [HideInInspector] public int s, m, l, xl = 0;
+
     private float totalTime;
     private float oldSeconds;
 
@@ -61,13 +63,13 @@ public class UIscript : MonoBehaviour {
         }
 		
 
-        XL_text.text = "0/2";
-        L_text.text = "0/5";
-        M_text.text = "0/10";
-        S_text.text = "0/20";
+        XL_text.text = xl + "/2";
+        L_text.text = l + "/5";
+        M_text.text = m + "/10";
+        S_text.text = s + "/20";
         
-        buffvalue += 0.001f;
-        Buff_slider.value += buffvalue;
-        Weight_slider.value += weightvalue;
+        //buffvalue += 0.001f;
+        //Buff_slider.value += buffvalue;
+        //Weight_slider.value += weightvalue;
 	}
 }

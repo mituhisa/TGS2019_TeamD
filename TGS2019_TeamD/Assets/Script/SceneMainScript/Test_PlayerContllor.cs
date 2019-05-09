@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Test_PlayerContllor : MonoBehaviour {
 
-    public float moveSpeed = 15f;
+    public float moveSpeed = 5f;
     private Vector3 moveDir;
+    private Animator anim;
 
     float inputHorizontal;
     float inputVertical;
 
-    [SerializeField] public GameObject Center;
     [HideInInspector] public bool CheckFlg = false;
+
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -21,6 +26,25 @@ public class Test_PlayerContllor : MonoBehaviour {
 
             inputHorizontal = Input.GetAxisRaw("Horizontal");
             inputVertical = Input.GetAxisRaw("Vertical");
+        }
+
+        if(inputHorizontal != 0 || inputVertical != 0)
+        {
+            anim.SetFloat("Speed", 1);
+        }
+        else
+        {
+            anim.SetFloat("Speed", 0);
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveSpeed = 15;
+            anim.speed = 2;
+        }else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            moveSpeed = 5;
+            anim.speed = 1;
         }
 
         RaycastHit hit;
@@ -44,7 +68,9 @@ public class Test_PlayerContllor : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
-
+        if (!CheckFlg)
+        {
+            GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+        }
     }
 }

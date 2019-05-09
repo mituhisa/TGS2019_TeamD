@@ -22,6 +22,7 @@ public class PlayerHand : MonoBehaviour {
 
     public GameObject text;
     public GameObject player;
+    public UIscript Ui;
 
     // Use this for initialization
     void Start () {
@@ -60,7 +61,7 @@ public class PlayerHand : MonoBehaviour {
                 text.SetActive(false);
                 if (transform.localPosition == InitPos)
                 {
-                    Destroy(ItemObj);
+                    ItemCnt(ItemObj);
                     speed = 30.0f;
                     state = State.Normal;
                 }
@@ -100,5 +101,24 @@ public class PlayerHand : MonoBehaviour {
         {
             ItemObj = other.gameObject;
         }
+    }
+
+    void ItemCnt(GameObject Item)
+    {
+        if(Item.tag == "XL_Item")
+        {
+            Ui.xl++;
+        }
+        else if(Item.tag == "L_Item")
+        {
+            Ui.l++;
+        }else if(Item.tag == "M_Item")
+        {
+            Ui.m++;
+        }else if(Item.tag == "S_Item")
+        {
+            Ui.s++;
+        }
+        Destroy(Item);
     }
 }

@@ -19,13 +19,16 @@ public class PlayerFace : MonoBehaviour {
 
     // Update is called once per frame
     void Update()
-    { 
-        yaw = Input.GetAxis("Mouse X");
-        pitch = Input.GetAxis("Mouse Y");
+    {
+        if (!playerBody.GetComponent<Test_PlayerContllor>().CheckFlg)
+        {
+            yaw = Input.GetAxis("Mouse X");
+            pitch = Input.GetAxis("Mouse Y");
+        }
 
-        roteuler = new Vector3(Mathf.Clamp(roteuler.x - pitch * Time.deltaTime * 200f, -80, 60), /*roteuler.y + yaw*/0f, 0f);
+        roteuler = new Vector3(0f,Mathf.Clamp(roteuler.y + pitch * Time.deltaTime * 200f, -80, 60), 0f);
         transform.localEulerAngles = roteuler;
 
-        playerBody.transform.Rotate(0, roteuler.y + yaw, 0);
+        playerBody.transform.Rotate(0, roteuler.x + yaw, 0);
     }
 }

@@ -229,18 +229,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\FauxGravityAttractor.cs" />
-    <Compile Include="Assets\FauxGravityBody.cs" />
-    <Compile Include="Assets\PlayerCamera.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
-    <Compile Include="Assets\PlayerFace.cs" />
-    <Compile Include="Assets\PlayerHand.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\FauxGravityAttractor.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\FauxGravityBody.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerCamera.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerController.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerFace.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerHand.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\Test_PlayerCamera.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\Test_PlayerContllor.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\UIscript.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\FirstSelectButton.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\RotateCamera.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\SceneChange.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\SelectButton.cs" />
+    <Compile Include="Assets\Script\TestSphere.cs" />
     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\LookCamera.cs" />
     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
-    <Compile Include="Assets\Test_PlayerCamera.cs" />
-    <Compile Include="Assets\Test_PlayerContllor.cs" />
+    <Compile Include="Assets\umitora\CameraController_umitora.cs" />
+    <Compile Include="Assets\umitora\CreateStage_umitora.cs" />
     <Compile Include="Assets\umitora\GravityController.cs" />
+    <Compile Include="Assets\umitora\PlayerController_umitora.cs" />
+    <Compile Include="Assets\umitora\PlayerController2_umitora.cs" />
     <Compile Include="Assets\umitora\Test_ItemManager.cs" />
+    <Compile Include="Assets\umitora\Test01.cs" />
+    <Compile Include="Assets\umitora\Test02.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

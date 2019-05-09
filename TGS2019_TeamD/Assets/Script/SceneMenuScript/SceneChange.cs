@@ -25,10 +25,10 @@ public class SceneChange : MonoBehaviour {
 
     public void OnClick() {
         if(Button == tutorialB) {
-            SceneManager.LoadScene("");
+            SceneManager.LoadScene("SceneMain");
         }
         if(Button == mainB) {
-            SceneManager.LoadScene("Ingame");
+            SceneManager.LoadScene("SceneMain");
         }
         if(Button == menuB) {
             SceneManager.LoadScene("Menu");
