@@ -79,9 +79,9 @@ public class Test01 : MonoBehaviour
         Transform test2 = GameObject.Find("Cube_test2").GetComponent<Transform>();
 
 
-        Debug.DrawRay(transform.position, test2.up * 10, Color.blue, 1);
-        Debug.DrawRay(transform.position, transform.InverseTransformDirection(test2.up) * 10, Color.green);
-        Debug.DrawRay(transform.position, transform.TransformDirection(test2.up) * 10, Color.black, 1);
+        Debug.DrawRay(transform.position, test2.up * 10, Color.green);
+        Debug.DrawRay(transform.position, transform.InverseTransformDirection(test2.up) * 10, Color.blue);
+        Debug.DrawRay(transform.position, transform.TransformDirection(test2.up) * 10, Color.black);
 
 
 

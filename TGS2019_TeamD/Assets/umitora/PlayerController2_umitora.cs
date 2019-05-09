@@ -6,10 +6,14 @@ public class PlayerController2_umitora : MonoBehaviour {
 
 
 
-    float speed = 100;
+    float speed = 20;
 
 
 
+    bool UIflg = false;
+
+
+  public  bool playerMoveFlag = true;
 
     // Use this for initialization
 
@@ -26,40 +30,76 @@ public class PlayerController2_umitora : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Vector3 down = transform.TransformDirection(Vector3.down);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, down,out hit, 20))
+
+        //if(Input.GetKeyDown(KeyCode.K))
+
+
+
+
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            if (hit.transform.tag == "Ground_umitora")
-            {
-                transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-            }
-
-
-
+            UIflg = !UIflg;
 
         }
 
+        if (UIflg)
+        {
+            //GameObject.Find("UIManager").GetComponent<UIManager>().DisplayPlayerItemNum(true);
+            //GameObject.Find("UIManager").GetComponent<UIManager>().DisplayRocketRepairUI(true);
 
-        float zAxis = Input.GetAxis("Vertical");
-        float xAxis = Input.GetAxis("Horizontal");
-
-
-        Transform mainCamera = Camera.main.transform;
-        Vector3 diff = (mainCamera.forward * zAxis + mainCamera.right * xAxis);
-        diff.Normalize();
-        diff = transform.InverseTransformDirection(diff);
-        diff.y = 0;
-        diff = transform.TransformDirection(diff);
-        transform.LookAt(transform.position + diff, transform.up);
-        
-        transform.Translate(new Vector3(0, 0, speed* (Mathf.Abs(xAxis) + Mathf.Abs(zAxis))) * Time.deltaTime, Space.Self);
+        }
+        else
+        {
+            //GameObject.Find("UIManager").GetComponent<UIManager>().DisplayPlayerItemNum(false);
+            //GameObject.Find("UIManager").GetComponent<UIManager>().DisplayRocketRepairUI(false);
+        }
 
 
 
 
 
-	}
+        if (playerMoveFlag)
+        {
+            Vector3 down = transform.TransformDirection(Vector3.down);
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, down, out hit, 20))
+            {
+                if (hit.transform.tag == "Ground_umitora")
+                {
+                    transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+                }
+
+
+
+
+            }
+
+
+            float zAxis = Input.GetAxis("Vertical");
+            float xAxis = Input.GetAxis("Horizontal");
+
+
+            Transform mainCamera = Camera.main.transform;
+            Vector3 diff = (mainCamera.up * zAxis + mainCamera.right * xAxis);
+            diff.Normalize();
+            diff = transform.InverseTransformDirection(diff);
+            diff.y = 0;
+            diff = transform.TransformDirection(diff);
+            transform.LookAt(transform.position + diff, transform.up);
+
+            transform.Translate(new Vector3(0, 0, speed * (Mathf.Abs(xAxis) + Mathf.Abs(zAxis))) * Time.deltaTime, Space.Self);
+        }
+
+        //RaycastHit hitGround;
+        //if(!Physics.Raycast(transform.position,down,out hitGround, 2))
+        //{
+        //    transform.Translate(0,- 1 * Time.deltaTime, 0,Space.Self);
+        //}
+        //transform.Translate(0, -5*Time.deltaTime, 0, Space.Self);
+
+
+
+    }
 
 
 
