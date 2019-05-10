@@ -37,7 +37,7 @@ public class RocketRepairUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        playerflag = GameObject.Find("Player_umitora2").GetComponent<PlayerController2_umitora>();
+        //playerflag = GameObject.Find("Player_umitora2").GetComponent<PlayerController2_umitora>();
         myRocketRepair = GameObject.Find("ItemManager").GetComponent<RocketRepair>();
         myPlayerItemManager = GameObject.Find("ItemManager").GetComponent<PlayerItemManager>();
 
@@ -124,7 +124,7 @@ public class RocketRepairUI : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.K) && !isRepairDisplay)    //範囲内でボタン押した時
             {
-                playerflag.playerMoveFlag = false;//********************************************    //プレイヤー動かせなくする
+                //playerflag.playerMoveFlag = false;//********************************************    //プレイヤー動かせなくする
                 isRepairDisplay = true;                 //ロケット修理の画面表示するフラグ
                 RocketdayoText.enabled= true;           //ロケットだよのテキスト表示
                 PlayerdayoText.enabled = true;          //プレイヤーだよのテキスト表示
@@ -135,7 +135,7 @@ public class RocketRepairUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.L) && isRepairDisplay)     //
             {
-                playerflag.playerMoveFlag = true;//*********************************************
+                //playerflag.playerMoveFlag = true;//*********************************************
                 isRepairDisplay = false;
                 RocketdayoText.enabled = false;
                 PlayerdayoText.enabled = false;

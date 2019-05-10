@@ -247,10 +247,14 @@
     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
     <Compile Include="Assets\umitora\CameraController_umitora.cs" />
     <Compile Include="Assets\umitora\CreateStage_umitora.cs" />
+    <Compile Include="Assets\umitora\GameManager_umitora.cs" />
     <Compile Include="Assets\umitora\GravityController.cs" />
+    <Compile Include="Assets\umitora\NewBehaviourScript.cs" />
     <Compile Include="Assets\umitora\PlayerController_umitora.cs" />
     <Compile Include="Assets\umitora\PlayerController2_umitora.cs" />
-    <Compile Include="Assets\umitora\Test_ItemManager.cs" />
+    <Compile Include="Assets\umitora\PlayerItemManager.cs" />
+    <Compile Include="Assets\umitora\RocketRepair.cs" />
+    <Compile Include="Assets\umitora\RocketRepairUI.cs" />
     <Compile Include="Assets\umitora\Test01.cs" />
     <Compile Include="Assets\umitora\Test02.cs" />
   </ItemGroup>
