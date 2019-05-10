@@ -8,15 +8,41 @@ using UnityEngine.EventSystems;
 
 public class RocketRepairUI : MonoBehaviour
 {
+    //区分
+    public enum Size
+    {
+        S,
+        M,
+        L,
+        XL,
 
-    RocketRepair myRocketRepair;
-    PlayerItemManager myPlayerItemManager;
+        MAX,
+    }
+
+    //選択しているオブジェクトの名前
+public enum OBJECT
+    {
+        ROCKET,
+        PLAYER,
+
+        MAX,
+    }
+
+    int selectObject = (int)OBJECT.PLAYER;  //ボタンを選択する時にどのオブジェクトを選択しているか見るやつ
+    int selectSize = (int)Size.S;         //ボタンを選択する時にどのサイズを選択しているか見るやつ
 
 
-    GameObject RocketRepairImage;
+    GameObject[,] Buttons=new GameObject[(int)OBJECT.MAX,(int)Size.MAX];    //選択できるボタン
+
+
+    RocketRepair myRocketRepair;            //ロケットのアイテムのスクリプト
+    PlayerItemManager myPlayerItemManager;  //プレイヤーのアイテムのスクリプト
+
+
+    GameObject RocketRepairImage;       //修理のUIの親のオブジェクト
 
     [SerializeField] GameObject FirstSelectButton;  //最初に選択されているボタン
-    GameObject Button;      //今選択しているボタン
+    GameObject SelectButton;      //今選択しているボタン
     GameObject ButtonBuf;   //前のフレームで選択したボタン
 
     GameObject[] ButtonEffect = new GameObject[2];  //ボタンを選択しているエフェクトみたいなやつ
@@ -31,7 +57,7 @@ public class RocketRepairUI : MonoBehaviour
 
 
 
-    PlayerController2_umitora playerflag;//*****************************************************
+    //PlayerController2_umitora playerflag;//*****************************************************
 
 
     // Use this for initialization
@@ -51,32 +77,63 @@ public class RocketRepairUI : MonoBehaviour
         PlayerdayoText.enabled=false;
 
 
-        int[] num;
-        myRocketRepair.GetItemNum(out num);
-    
+        GameObject[] getButtons = new GameObject[(int)OBJECT.MAX * (int)Size.MAX];
         int i = 0;
-        foreach (Transform child in RocketRepairImage.transform)
+        foreach(Transform child in RocketRepairImage.transform)
         {
-            int j = 0;
-            foreach (Transform grandChild in child.transform)
+            //Buttons
+            getButtons[i] = child.gameObject;
+            i++;
+
+        }
+        for(int n=0;n< (int)OBJECT.MAX; n++)
+        {
+            for(int m=0;m< (int)Size.MAX; m++)
             {
-                if (j < 2)
-                {
-                    grandChild.gameObject.SetActive(false);
-                }
-                if (++j == 3)
-                {
-                    grandChild.gameObject.GetComponent<Text>().text = "×" + num[i % 4].ToString();  //ロケットとプレイヤーのアイテムの数を表示
-                    if (++i == 4)
-                    {
-                        myPlayerItemManager.GetItemNum(out num);
-                    }
-                    break;
-                }
+                Buttons[n, m] = getButtons[n * (int)Size.MAX + m];
             }
         }
 
 
+
+
+        int[] itemNum;
+        myRocketRepair.GetItemNum(out itemNum);
+        //int[] playerItemNum;
+        //myPlayerItemManager.GetItemNum(out playerItemNum);
+        i = 0;
+        foreach(GameObject button in Buttons)
+        {
+            int childNum = 0;
+            foreach(Transform child in button.transform)
+            {
+                switch (childNum)
+                {
+                    case 0:
+                    case 1:
+                        //ButtonEffect[childNum] = child.gameObject;
+                        child.gameObject.SetActive(false);
+                        break;
+
+                    case 2:
+                        child.GetComponent<Text>().text= "×" + itemNum[i % 4].ToString();  //ロケットとプレイヤーのアイテムの数を表示
+                        break;
+                    //break;
+
+                    case 3:
+                        childNum = 0;
+                        continue;
+
+
+                }
+                childNum++;
+            }
+            if(++i==4)
+                myPlayerItemManager.GetItemNum(out itemNum);
+
+
+
+        }
 
         if (FirstSelectButton == null)
         {
@@ -97,11 +154,14 @@ public class RocketRepairUI : MonoBehaviour
             }
         }
 
-        EventSystem.current.SetSelectedGameObject(FirstSelectButton);
-        ButtonBuf = Button = FirstSelectButton;
 
 
-        cDisplayRocketRepair = DisplayRocketRepair();       //コルーチン
+
+
+
+        ButtonBuf = SelectButton = FirstSelectButton;
+
+
         RocketRepairImage.SetActive(false);
 
     }
@@ -158,48 +218,79 @@ public class RocketRepairUI : MonoBehaviour
 
     }
 
-
+    //ロケットの範囲からプレイヤーが出た時
     private void OnTriggerExit(Collider other)
     {
         PressButtonText.enabled = false;
     }
 
 
+    //ロケットの修理とかのUIをコルーチンで表示
     IEnumerator DisplayRocketRepair()
     {
         while (true)
         {
-           GameObject pushButton = EventSystem.current.currentSelectedGameObject;
-            Debug.Log(pushButton);
-            if(pushButton==null)
-                pushButton=GameObject.Find("Player_S_Item");
-            if (pushButton != null)
+            //上下左右押した時の処理
+            int horizontal;
+            int vertical;
+            if (Input.GetButtonDown("ButtonRight") && Input.GetButtonDown("ButtonLeft"))
+                horizontal = 0;
+            else if (Input.GetButtonDown("ButtonRight"))
+                horizontal = 1;
+            else if (Input.GetButtonDown("ButtonLeft"))
+                horizontal = -1;
+            else
+                horizontal = 0;
+
+            if (Input.GetButtonDown("ButtonUp") && Input.GetButtonDown("ButtonDown"))
+               vertical = 0;
+            else if (Input.GetButtonDown("ButtonUp"))
+                vertical = -1;
+            else if (Input.GetButtonDown("ButtonDown"))
+                vertical = 1;
+            else
+                vertical = 0;
+       
+            //どのボタンを選択するかの処理
+            selectObject = Mathf.Clamp((int)selectObject + horizontal, 0, (int)OBJECT.MAX - 1);
+            selectSize = Mathf.Clamp((int)selectSize + vertical, 0, (int)Size.MAX - 1);
+
+            SelectButton = Buttons[selectObject, selectSize];
+
+            if (ButtonBuf != SelectButton)
             {
-                Button = pushButton;
-                if (Button != ButtonBuf)
+                int j = 0;
+                foreach (Transform child in SelectButton.transform)       //今選択中のボタンのエフェクト表示
                 {
-                    int j = 0;
-                    foreach (Transform child in Button.transform)       //今選択中のボタンのエフェクト表示
-                    {
-                        ButtonEffect[j] = child.gameObject;
-                        ButtonEffect[j].SetActive(true);
-                        if (++j == 2)
-                            break;
-                    }
-
-                    j = 0;
-
-                    foreach (Transform child in ButtonBuf.transform)        //前のフレームで選択していたエフェクトを非表示に
-                    {
-                        ButtonEffect[j] = child.gameObject;
-                        ButtonEffect[j].SetActive(false);
-                        if (++j == 2)
-                            break;
-                    }
-
+                    //ButtonEffect[j] = child.gameObject;
+                    //ButtonEffect[j].SetActive(true);
+                    child.gameObject.SetActive(true);
+                    if (++j == 2)
+                        break;
                 }
+
+
+                j = 0;
+
+                foreach (Transform child in ButtonBuf.transform)        //前のフレームで選択していたエフェクトを非表示に
+                {
+                    //ButtonEffect[j] = child.gameObject;
+                    //ButtonEffect[j].SetActive(false);
+                    child.gameObject.SetActive(false);
+
+                    if (++j == 2)
+                        break;
+                }
+
+
             }
-            ButtonBuf = Button; 
+
+
+
+
+            ButtonBuf = SelectButton;
+
+
 
 
             //if(Input.GetButtonDown(""))
@@ -207,7 +298,7 @@ public class RocketRepairUI : MonoBehaviour
             yield return null;//***************************************
             if (Input.GetKeyDown(KeyCode.L))
             {
-                yield break;
+                yield break;        //コルーチン終了
             }
 
 
@@ -215,7 +306,7 @@ public class RocketRepairUI : MonoBehaviour
 
             else if (Input.GetKeyDown(KeyCode.K))
             {
-                switch (Button.name)
+                switch (SelectButton.name)
                 {
                     case "Player_S_Item":
                         if (myPlayerItemManager.PopItem("S_Item"))
@@ -320,7 +411,136 @@ public class RocketRepairUI : MonoBehaviour
             }
 
 
+
+
+            //selectObject =Mathf.Clamp( (int)selectObject + (int)Input.GetAxisRaw("Vertical"),0,(int)OBJECT.MAX-1);
+            //selectSize = Mathf.Clamp((int)selectSize + (int)Input.GetAxisRaw("Horizontal"), 0, (int)Size.MAX - 1);
+
+            //SelectButton = Buttons[selectObject, selectSize];
+
+            //if (ButtonBuf != SelectButton)
+            //{
+            //    int j = 0;
+            //    foreach (Transform child in SelectButton.transform)       //今選択中のボタンのエフェクト表示
+            //    {
+            //        ButtonEffect[j] = child.gameObject;
+            //        ButtonEffect[j].SetActive(true);
+            //        if (++j == 2)
+            //            break;
+            //    }
+
+
+            //    j = 0;
+
+            //    foreach (Transform child in ButtonBuf.transform)        //前のフレームで選択していたエフェクトを非表示に
+            //    {
+            //        ButtonEffect[j] = child.gameObject;
+            //        ButtonEffect[j].SetActive(false);
+            //        if (++j == 2)
+            //            break;
+            //    }
+
+
+            //}
+
+
+
+
+            //ButtonBuf = SelectButton;
+
+
         }
+
+
+
+
     }
 
 }
+
+
+
+
+
+
+//GameObject pushButton = EventSystem.current.currentSelectedGameObject;
+// Debug.Log(pushButton);
+// if(pushButton==null)
+//     pushButton=GameObject.Find("Player_S_Item");
+// if (pushButton != null)
+// {
+//     SelectButton = pushButton;
+//     if (SelectButton != ButtonBuf)
+//     {
+//         int j = 0;
+//         foreach (Transform child in SelectButton.transform)       //今選択中のボタンのエフェクト表示
+//         {
+//             ButtonEffect[j] = child.gameObject;
+//             ButtonEffect[j].SetActive(true);
+//             if (++j == 2)
+//                 break;
+//         }
+
+//         j = 0;
+
+//         foreach (Transform child in ButtonBuf.transform)        //前のフレームで選択していたエフェクトを非表示に
+//         {
+//             ButtonEffect[j] = child.gameObject;
+//             ButtonEffect[j].SetActive(false);
+//             if (++j == 2)
+//                 break;
+//         }
+
+//     }
+// }
+// ButtonBuf = SelectButton; 
+
+
+
+//int[] num;
+//myRocketRepair.GetItemNum(out num);
+
+// i = 0;
+//foreach (Transform child in RocketRepairImage.transform)
+//{
+//    int j = 0;
+//    foreach (Transform grandChild in child.transform)
+//    {
+//        if (j < 2)
+//        {
+//            grandChild.gameObject.SetActive(false);
+//        }
+//        if (++j == 3)
+//        {
+//            grandChild.gameObject.GetComponent<Text>().text = "×" + num[i % 4].ToString();  //ロケットとプレイヤーのアイテムの数を表示
+//            if (++i == 4)
+//            {
+//                myPlayerItemManager.GetItemNum(out num);
+//            }
+//            break;
+//        }
+//    }
+//}
+
+
+
+//if (FirstSelectButton == null)
+//{
+//    FirstSelectButton = GameObject.Find("Player_S_Item");
+//}
+
+//foreach (Transform child in RocketRepairImage.transform)
+//{
+//    if (child.gameObject.name == FirstSelectButton.gameObject.name)
+//    {
+//        int j = 0;
+//        foreach (Transform grandChild in child.transform)
+//        {
+//            grandChild.gameObject.SetActive(true);
+//            if (++j == 2)
+//                break;
+//        }
+//    }
+//}
+
+//EventSystem.current.SetSelectedGameObject(FirstSelectButton);
