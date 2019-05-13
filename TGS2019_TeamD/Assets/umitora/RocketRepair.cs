@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 
@@ -38,9 +39,9 @@ public class RocketRepair : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 
 
+        IsFinishRepair();
 
 
 
@@ -54,16 +55,16 @@ public class RocketRepair : MonoBehaviour {
         //************************************************いじってほしいとこ***************************************************************                
 
         MaxItemNum[(int)Size.S] = 20;
-        CurrentItemNum[(int)Size.S] = 0;
+        CurrentItemNum[(int)Size.S] = 20;
 
         MaxItemNum[(int)Size.M] = 10;
-        CurrentItemNum[(int)Size.M] = 0;
+        CurrentItemNum[(int)Size.M] = 10;
 
         MaxItemNum[(int)Size.L] = 5;
-        CurrentItemNum[(int)Size.L] = 0;
+        CurrentItemNum[(int)Size.L] = 4;
 
         MaxItemNum[(int)Size.XL] = 2;
-        CurrentItemNum[(int)Size.XL] = 0;
+        CurrentItemNum[(int)Size.XL] = 2;
 
 
 
@@ -92,6 +93,7 @@ public class RocketRepair : MonoBehaviour {
             }
         }
 
+        SceneManager.LoadScene("Clear");
         return true;
     }
 

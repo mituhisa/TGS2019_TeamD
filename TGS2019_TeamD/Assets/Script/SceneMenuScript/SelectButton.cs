@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SelectButton : MonoBehaviour {
 
@@ -16,8 +17,11 @@ public class SelectButton : MonoBehaviour {
     /*
      * ボタンに付加するエフェクト
      */
-    private GameObject[] ButtonEffect = new GameObject[3];
+    private GameObject[] ButtonEffect = new GameObject[4];
     private int i = 0;
+
+    Color Red = Color.red;
+    Color White = Color.white;
 
     void Update() {
         /*
@@ -50,8 +54,9 @@ public class SelectButton : MonoBehaviour {
                 foreach (Transform child in Button.transform)
                 {
                     ButtonEffect[j] = child.gameObject;
-                    if (j > 0) ButtonEffect[j].SetActive(true);
-                    j++;
+                if (j > 0) ButtonEffect[j].SetActive(true);
+                if(j == 0) ButtonEffect[j].GetComponent<Text>().color = Red;
+                j++;
                 }
                 j = 0;
                 /*
@@ -60,7 +65,8 @@ public class SelectButton : MonoBehaviour {
                 foreach (Transform child in ButtonBuf.transform)
                 {
                     ButtonEffect[j] = child.gameObject;
-                    if (j > 0) ButtonEffect[j].SetActive(false);
+                if (j == 0) ButtonEffect[j].GetComponent<Text>().color = White;
+                if (j > 0) ButtonEffect[j].SetActive(false);
                     j++;
                 }
 
