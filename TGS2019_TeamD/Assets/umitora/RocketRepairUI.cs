@@ -77,6 +77,7 @@ public enum OBJECT
         PlayerdayoText.enabled=false;
 
 
+
         GameObject[] getButtons = new GameObject[(int)OBJECT.MAX * (int)Size.MAX];
         int i = 0;
         foreach(Transform child in RocketRepairImage.transform)
@@ -95,8 +96,10 @@ public enum OBJECT
         }
 
 
-
-
+        if (FirstSelectButton == null)
+        {
+            FirstSelectButton = GameObject.Find("Player_S_Item");
+        }
         //テキストをオフにしたりアイテムの数をセットしたりする
         foreach (Transform child in RocketRepairImage.transform)
         {
