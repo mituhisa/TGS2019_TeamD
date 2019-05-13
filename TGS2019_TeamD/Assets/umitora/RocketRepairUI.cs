@@ -97,62 +97,23 @@ public enum OBJECT
 
 
 
-        int[] itemNum;
-        myRocketRepair.GetItemNum(out itemNum);
-        //int[] playerItemNum;
-        //myPlayerItemManager.GetItemNum(out playerItemNum);
-        i = 0;
-        foreach(GameObject button in Buttons)
-        {
-            int childNum = 0;
-            foreach(Transform child in button.transform)
-            {
-                switch (childNum)
-                {
-                    case 0:
-                    case 1:
-                        //ButtonEffect[childNum] = child.gameObject;
-                        child.gameObject.SetActive(false);
-                        break;
-
-                    case 2:
-                        child.GetComponent<Text>().text= "×" + itemNum[i % 4].ToString();  //ロケットとプレイヤーのアイテムの数を表示
-                        break;
-                    //break;
-
-                    case 3:
-                        childNum = 0;
-                        continue;
-
-
-                }
-                childNum++;
-            }
-            if(++i==4)
-                myPlayerItemManager.GetItemNum(out itemNum);
-
-
-
-        }
-
-        if (FirstSelectButton == null)
-        {
-            FirstSelectButton = GameObject.Find("Player_S_Item");
-        }
-
+        //テキストをオフにしたりアイテムの数をセットしたりする
         foreach (Transform child in RocketRepairImage.transform)
         {
-            if (child.gameObject.name == FirstSelectButton.gameObject.name)
+            if (child.gameObject.name != FirstSelectButton.gameObject.name)
             {
                 int j = 0;
                 foreach (Transform grandChild in child.transform)
                 {
-                    grandChild.gameObject.SetActive(true);
+                    grandChild.gameObject.SetActive(false);
                     if (++j == 2)
                         break;
                 }
             }
         }
+
+        ItemTextSet();    //アイテムの数をセットするやつ
+
 
 
 
@@ -228,6 +189,8 @@ public enum OBJECT
     //ロケットの修理とかのUIをコルーチンで表示
     IEnumerator DisplayRocketRepair()
     {
+        ItemTextSet();
+
         while (true)
         {
             //上下左右押した時の処理
@@ -385,68 +348,13 @@ public enum OBJECT
 
 
                 }
-
-                int[] num;
-                myRocketRepair.GetItemNum(out num);
-                int i = 0;
-
-                foreach (Transform child in RocketRepairImage.transform)
-                {
-                    int j = 0;
-                    foreach (Transform grandChild in child.transform)
-                    {
-                        if (++j == 3)
-                        {
-                            grandChild.gameObject.GetComponent<Text>().text = "×" + num[i % 4].ToString();      //ロケットとプレイヤーのアイテムの数を表示
-                            if (++i == 4)
-                            {
-                                myPlayerItemManager.GetItemNum(out num);
-                            }
-                            break;
-                        }
-                    }
-                }
-
+                ItemTextSet();      //アイテムの数をセットするやつ
 
             }
 
 
 
 
-            //selectObject =Mathf.Clamp( (int)selectObject + (int)Input.GetAxisRaw("Vertical"),0,(int)OBJECT.MAX-1);
-            //selectSize = Mathf.Clamp((int)selectSize + (int)Input.GetAxisRaw("Horizontal"), 0, (int)Size.MAX - 1);
-
-            //SelectButton = Buttons[selectObject, selectSize];
-
-            //if (ButtonBuf != SelectButton)
-            //{
-            //    int j = 0;
-            //    foreach (Transform child in SelectButton.transform)       //今選択中のボタンのエフェクト表示
-            //    {
-            //        ButtonEffect[j] = child.gameObject;
-            //        ButtonEffect[j].SetActive(true);
-            //        if (++j == 2)
-            //            break;
-            //    }
-
-
-            //    j = 0;
-
-            //    foreach (Transform child in ButtonBuf.transform)        //前のフレームで選択していたエフェクトを非表示に
-            //    {
-            //        ButtonEffect[j] = child.gameObject;
-            //        ButtonEffect[j].SetActive(false);
-            //        if (++j == 2)
-            //            break;
-            //    }
-
-
-            //}
-
-
-
-
-            //ButtonBuf = SelectButton;
 
 
         }
@@ -456,10 +364,138 @@ public enum OBJECT
 
     }
 
+    //アイテムの数をセットするやつ
+    private void ItemTextSet()
+    {
+
+        int[] num;
+        myRocketRepair.GetItemNum(out num);
+        int i = 0;
+
+        foreach (Transform child in RocketRepairImage.transform)
+        {
+            int j = 0;
+            foreach (Transform grandChild in child.transform)
+            {
+                if (++j == 3)
+                {
+                    grandChild.gameObject.GetComponent<Text>().text = "×" + num[i % 4].ToString();      //ロケットとプレイヤーのアイテムの数を表示
+                    if (++i == 4)
+                    {
+                        myPlayerItemManager.GetItemNum(out num);
+                    }
+                    break;
+                }
+            }
+        }
+
+
+
+
+    }
+
+
+
 }
 
 
+//int[] itemNum;
+//myRocketRepair.GetItemNum(out itemNum);
+//        //int[] playerItemNum;
+//        //myPlayerItemManager.GetItemNum(out playerItemNum);
+//        i = 0;
+//        foreach(GameObject button in Buttons)
+//        {
+//            int childNum = 0;
+//            foreach(Transform child in button.transform)
+//            {
+//                switch (childNum)
+//                {
+//                    case 0:
+//                    case 1:
+//                        //ButtonEffect[childNum] = child.gameObject;
+//                        child.gameObject.SetActive(false);
+//                        break;
 
+//                    case 2:
+//                        child.GetComponent<Text>().text= "×" + itemNum[i % 4].ToString();  //ロケットとプレイヤーのアイテムの数を表示
+//                        break;
+//                    //break;
+
+//                    case 3:
+//                        childNum = 0;
+//                        continue;
+
+
+//                }
+//                childNum++;
+//            }
+//            if(++i==4)
+//                myPlayerItemManager.GetItemNum(out itemNum);
+
+
+
+//        }
+
+//        if (FirstSelectButton == null)
+//        {
+//            FirstSelectButton = GameObject.Find("Player_S_Item");
+//        }
+
+//        foreach (Transform child in RocketRepairImage.transform)
+//        {
+//            if (child.gameObject.name == FirstSelectButton.gameObject.name)
+//            {
+//                int j = 0;
+//                foreach (Transform grandChild in child.transform)
+//                {
+//                    grandChild.gameObject.SetActive(true);
+//                    if (++j == 2)
+//                        break;
+//                }
+//            }
+//        }
+
+
+
+
+
+
+
+//selectObject =Mathf.Clamp( (int)selectObject + (int)Input.GetAxisRaw("Vertical"),0,(int)OBJECT.MAX-1);
+//selectSize = Mathf.Clamp((int)selectSize + (int)Input.GetAxisRaw("Horizontal"), 0, (int)Size.MAX - 1);
+
+//SelectButton = Buttons[selectObject, selectSize];
+
+//if (ButtonBuf != SelectButton)
+//{
+//    int j = 0;
+//    foreach (Transform child in SelectButton.transform)       //今選択中のボタンのエフェクト表示
+//    {
+//        ButtonEffect[j] = child.gameObject;
+//        ButtonEffect[j].SetActive(true);
+//        if (++j == 2)
+//            break;
+//    }
+
+
+//    j = 0;
+
+//    foreach (Transform child in ButtonBuf.transform)        //前のフレームで選択していたエフェクトを非表示に
+//    {
+//        ButtonEffect[j] = child.gameObject;
+//        ButtonEffect[j].SetActive(false);
+//        if (++j == 2)
+//            break;
+//    }
+
+
+//}
+
+
+
+
+//ButtonBuf = SelectButton;
 
 
 
