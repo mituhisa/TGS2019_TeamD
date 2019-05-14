@@ -45,9 +45,9 @@ public enum OBJECT
     GameObject SelectButton;      //今選択しているボタン
     GameObject ButtonBuf;   //前のフレームで選択したボタン
 
-    GameObject[] ButtonEffect = new GameObject[2];  //ボタンを選択しているエフェクトみたいなやつ
+    //GameObject[] ButtonEffect = new GameObject[2];  //ボタンを選択しているエフェクトみたいなやつ
 
-    IEnumerator cDisplayRocketRepair;       //ロケットを修理するUIを表示するやつ
+    //IEnumerator cDisplayRocketRepair;       //ロケットを修理するUIを表示するやつ
     bool isRepairDisplay = false;
 
 
