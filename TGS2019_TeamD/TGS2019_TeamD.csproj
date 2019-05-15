@@ -213,22 +213,46 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/fores/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/Users/mituh/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/fores/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
+      <HintPath>C:/Users/mituh/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Roket\RocketMove.cs" />
-    <Compile Include="Assets\Rubble\ObjectRandomSpawn.cs" />
-    <Compile Include="Assets\Rubble\RubbleCreate.cs" />
-    <Compile Include="Assets\Rubble\RubbleGravity.cs" />
-    <Compile Include="Assets\Rubble\RubbleMove.cs" />
-    <Compile Include="Assets\umitora\GravityController.cs" />
-    <Compile Include="Assets\umitora\PlayerController_umitora.cs" />
-    <Compile Include="Assets\umitora\Test_ItemManager.cs" />
-    <Compile Include="Assets\umitora\Test01.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\FauxGravityAttractor.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\FauxGravityBody.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerCamera.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerController.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerFace.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\PlayerHand.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\Test_PlayerCamera.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\Test_PlayerContllor.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\UIscript.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\FirstSelectButton.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\RotateCamera.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\SceneChange.cs" />
+    <Compile Include="Assets\Script\SceneMenuScript\SelectButton.cs" />
+    <Compile Include="Assets\Script\TestSphere.cs" />
+    <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\LookCamera.cs" />
+    <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
+    <Compile Include="Assets\umitora\CreateStage_umitora.cs" />
+    <Compile Include="Assets\umitora\PlayerItemManager.cs" />
+    <Compile Include="Assets\umitora\PlayerItemUI.cs" />
+    <Compile Include="Assets\umitora\RocketRepair.cs" />
+    <Compile Include="Assets\umitora\RocketRepairUI.cs" />
+    <Compile Include="Assets\umitora\Test\CameraController_umitora.cs" />
+    <Compile Include="Assets\umitora\Test\GravityController.cs" />
+    <Compile Include="Assets\umitora\Test\PlayerController_umitora.cs" />
+    <Compile Include="Assets\umitora\Test\PlayerController2_umitora.cs" />
+    <Compile Include="Assets\umitora\Test\Test01.cs" />
+    <Compile Include="Assets\umitora\Test\Test02.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

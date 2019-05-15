@@ -8,7 +8,7 @@ TagManager:
   - M_Item
   - L_Item
   - XL_Item
-  - Planet
+  - GameObj
   layers:
   - Default
   - TransparentFX
