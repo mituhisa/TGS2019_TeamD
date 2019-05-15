@@ -41,6 +41,8 @@ public enum OBJECT
 
     GameObject RocketRepairImage;       //修理のUIの親のオブジェクト
 
+    public GameObject Player;
+
     [SerializeField] GameObject FirstSelectButton;  //最初に選択されているボタン
     GameObject SelectButton;      //今選択しているボタン
     GameObject ButtonBuf;   //前のフレームで選択したボタン
@@ -133,8 +135,6 @@ public enum OBJECT
     // Update is called once per frame
     void Update()
     {
-
-
 
     }
 
@@ -256,7 +256,7 @@ public enum OBJECT
 
             ButtonBuf = SelectButton;
 
-
+            Player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
 
 
             //if(Input.GetButtonDown(""))
@@ -264,6 +264,7 @@ public enum OBJECT
             yield return null;//***************************************
             if (Input.GetKeyDown(KeyCode.L))
             {
+                Player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 yield break;        //コルーチン終了
             }
 

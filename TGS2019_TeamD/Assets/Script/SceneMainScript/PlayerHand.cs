@@ -90,6 +90,7 @@ public class PlayerHand : MonoBehaviour {
                     PlayerCamera.GetComponent<Test_PlayerCamera>().anim.speed = 1;
                     PIManager.PushItem(ItemObj.tag);
                     Destroy(ItemObj);
+                    player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                     state = State.Normal;
                 }
                 break;
@@ -103,6 +104,7 @@ public class PlayerHand : MonoBehaviour {
                     transform.parent = GameObject.Find("Player").transform;
                     transform.localPosition = InitPos;
                     speed = 30.0f;
+                    player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                     state = State.Normal;
                 }
                 Debug.Log(dis);
@@ -114,13 +116,13 @@ public class PlayerHand : MonoBehaviour {
                     speed = 30.0f;
                     PlayerCamera.GetComponent<Test_PlayerCamera>().anim.SetBool("Shot", false);
                     PlayerCamera.GetComponent<Test_PlayerCamera>().anim.speed = 1;
+                    player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                     state = State.Normal;
                 }
                 break;
             case State.Normal:
                 transform.localPosition = InitPos;
                 transform.localRotation = InitRot;
-                player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 break;
         }
         //Debug.Log(state);

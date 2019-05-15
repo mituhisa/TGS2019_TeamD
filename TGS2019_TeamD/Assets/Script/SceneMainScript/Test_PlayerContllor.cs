@@ -70,6 +70,8 @@ public class Test_PlayerContllor : MonoBehaviour {
             // 自分を回転させる
             transform.rotation *= q;
         }
+
+        Debug.Log(CheckFlg);
     }
 
     private void FixedUpdate()

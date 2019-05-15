@@ -55,13 +55,13 @@ public class RocketRepair : MonoBehaviour {
         //************************************************いじってほしいとこ***************************************************************                
 
         MaxItemNum[(int)Size.S] = 20;
-        CurrentItemNum[(int)Size.S] = 20;
+        CurrentItemNum[(int)Size.S] = 19;
 
         MaxItemNum[(int)Size.M] = 10;
         CurrentItemNum[(int)Size.M] = 10;
 
         MaxItemNum[(int)Size.L] = 5;
-        CurrentItemNum[(int)Size.L] = 4;
+        CurrentItemNum[(int)Size.L] = 5;
 
         MaxItemNum[(int)Size.XL] = 2;
         CurrentItemNum[(int)Size.XL] = 2;
