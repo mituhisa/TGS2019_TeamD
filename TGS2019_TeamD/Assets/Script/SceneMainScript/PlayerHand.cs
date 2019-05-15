@@ -9,10 +9,12 @@ public class PlayerHand : MonoBehaviour {
         Landing,
         Return,
         Pull,
+        Release,
         Normal,
     }
    [HideInInspector] public State state;
 
+    private string ItemTex;
     private float speed = 30.0f;
     private Vector3 InitPos;
     private Quaternion InitRot;
@@ -20,9 +22,13 @@ public class PlayerHand : MonoBehaviour {
     [HideInInspector] public bool firingFlg = false;
     [HideInInspector] public Vector3 targetPos;
 
-    public GameObject text;
+    public GameObject ReturnTex;
+    public GameObject PullTex;
+    public GameObject SameTex;
     public GameObject player;
     public UIscript Ui;
+    public GameObject PlayerCamera;
+    public PlayerItemManager PIManager;
 
     // Use this for initialization
     void Start () {
@@ -38,31 +44,53 @@ public class PlayerHand : MonoBehaviour {
         {
             case State.Firing:
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime * 0.8f);
-                Debug.Log(targetPos);
                 //speed += -Time.deltaTime * 10.0f;
                 break;
             case State.Landing:
-                if (Input.GetMouseButtonDown(0))
+                if(ItemTex == "Player")
                 {
-                    transform.parent = null;
-                    text.SetActive(false);
-                    state = State.Pull;
-                }
-                if (Input.GetMouseButtonDown(1))
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        state = State.Return;
+                        ReturnTex.SetActive(false);
+                    }
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        state = State.Release;
+                        ReturnTex.SetActive(false);
+                    }
+                }else if(ItemTex == "Item")
                 {
-                    text.SetActive(false);
-                    state = State.Return;
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        state = State.Pull;
+                        PullTex.SetActive(false);
+                    }
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        state = State.Release;
+                        PullTex.SetActive(false);
+                    }
+                }else if(ItemTex == "Same")
+                {
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        state = State.Release;
+                        SameTex.SetActive(false);
+                    }
                 }
                 break;
             case State.Return:
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, InitPos, speed * Time.deltaTime * 0.8f);
                 ItemObj.transform.parent = this.gameObject.transform;
-                //speed += -Time.deltaTime * 10.0f;
-                text.SetActive(false);
                 if (transform.localPosition == InitPos)
                 {
                     speed = 30.0f;
+                    PlayerCamera.GetComponent<Test_PlayerCamera>().anim.SetBool("Shot", false);
+                    PlayerCamera.GetComponent<Test_PlayerCamera>().anim.speed = 1;
+                    PIManager.PushItem(ItemObj.tag);
                     Destroy(ItemObj);
+                    player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                     state = State.Normal;
                 }
                 break;
@@ -71,20 +99,33 @@ public class PlayerHand : MonoBehaviour {
                 float dis = Vector3.Distance(transform.position, player.transform.position);
                 if (dis < 1.405f)
                 {
+                    PlayerCamera.GetComponent<Test_PlayerCamera>().anim.SetBool("Shot", false);
+                    PlayerCamera.GetComponent<Test_PlayerCamera>().anim.speed = 1;
                     transform.parent = GameObject.Find("Player").transform;
                     transform.localPosition = InitPos;
                     speed = 30.0f;
+                    player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                     state = State.Normal;
                 }
                 Debug.Log(dis);
                 break;
+            case State.Release:
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, InitPos, speed * Time.deltaTime * 0.8f);
+                if (transform.localPosition == InitPos)
+                {
+                    speed = 30.0f;
+                    PlayerCamera.GetComponent<Test_PlayerCamera>().anim.SetBool("Shot", false);
+                    PlayerCamera.GetComponent<Test_PlayerCamera>().anim.speed = 1;
+                    player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
+                    state = State.Normal;
+                }
+                break;
             case State.Normal:
                 transform.localPosition = InitPos;
                 transform.localRotation = InitRot;
-                player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 break;
         }
-        Debug.Log(state);
+        //Debug.Log(state);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -93,9 +134,23 @@ public class PlayerHand : MonoBehaviour {
         {
             speed = 30.0f;
             state = State.Landing;
-            text.SetActive(true);
-            Debug.Log("touch");
+            if(PIManager.ComparisonWeight(other.tag) == "Player")
+            {
+                ReturnTex.SetActive(true);
+                ItemTex = PIManager.ComparisonWeight(other.tag);
+            }
+            else if(PIManager.ComparisonWeight(other.tag) == "Item")
+            {
+                PullTex.SetActive(true);
+                ItemTex = PIManager.ComparisonWeight(other.tag);
+            }
+            else if(PIManager.ComparisonWeight(other.tag) == "Same")
+            {
+                SameTex.SetActive(true);
+                ItemTex = PIManager.ComparisonWeight(other.tag);
+            }
         }
+        Debug.Log(other.tag);
        
         if(other.tag == "S_Item" || other.tag == "M_Item" || other.tag == "L_Item" || other.tag == "XL_Item")
         {

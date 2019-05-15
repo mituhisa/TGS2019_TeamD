@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIscript : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class UIscript : MonoBehaviour
         //　制限時間が0秒以下ならなにもしない
         if (totalTime <= 0f)
         {
+            SceneManager.LoadScene("Over");
             return;
         }
         //　トータルの制限時間を計測

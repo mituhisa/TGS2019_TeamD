@@ -10,7 +10,7 @@ public class Test_PlayerCamera : MonoBehaviour {
     [SerializeField] public GameObject Left;
     [SerializeField] public GameObject LockOnMarker;
 
-    Animator anim;
+    [HideInInspector] public Animator anim;
 
     Vector3 targetPos;
     private bool RayHitFlg = false;
@@ -19,6 +19,8 @@ public class Test_PlayerCamera : MonoBehaviour {
 
     private Transform InitParentR;
     private Transform InitParentL;
+
+    [HideInInspector] public bool animFlg = false;
 
     // Use this for initialization
     void Start () {
@@ -33,14 +35,15 @@ public class Test_PlayerCamera : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0) && RayHitFlg && Hand.GetComponent<PlayerHand>().state == PlayerHand.State.Normal)
         {
-            //targetPos = hit.point;
-            //anim.SetBool("Shot", true);
-            Right.transform.parent = Hand.transform;
-            Left.transform.parent = Hand.transform;
-            Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
-            Hand.GetComponent<PlayerHand>().targetPos = hit.point;
-            Debug.Log(hit.point);
-            player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
+            targetPos = hit.point;
+            anim.speed = 1;
+            anim.SetBool("Shot", true);
+            //Right.transform.parent = Hand.transform;
+            //Left.transform.parent = Hand.transform;
+            //Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
+            //Hand.GetComponent<PlayerHand>().targetPos = hit.point;
+            //Debug.Log(hit.point);
+            //player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
         }
         else
         {
@@ -52,22 +55,29 @@ public class Test_PlayerCamera : MonoBehaviour {
             Right.transform.parent = InitParentR;
             Left.transform.parent = InitParentL;
         }
-        //if (Fire)
-        //{
-        //    Right.transform.parent = Hand.transform;
-        //    Left.transform.parent = Hand.transform;
-        //    Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
-        //    Hand.GetComponent<PlayerHand>().targetPos = targetPos;
-        //    Debug.Log(hit.point);
-        //    player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
-        //    Fire = false;
-        //}
+        if (Fire)
+        {
+            Right.transform.parent = Hand.transform;
+            Left.transform.parent = Hand.transform;
+            Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
+            Hand.GetComponent<PlayerHand>().targetPos = targetPos;
+            player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
+            Fire = false;
+        }
 
-        //AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        //if(stateInfo.nameHash == Animator.StringToHash("Base Layer.Shot"))
-        //{
-        //    if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f) Fire = true;
-        //}
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.nameHash == Animator.StringToHash("Base Layer.Shot") && !animFlg)
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f)
+            {
+                anim.speed = 0;
+                Fire = true;
+                animFlg = true;
+            }
+        }
+
+        if (stateInfo.nameHash == Animator.StringToHash("Base Layer.Stay")) animFlg = false;
+        //Debug.Log(Fire);
     }
 
     void Ray()

@@ -37,14 +37,20 @@ public class Test_PlayerContllor : MonoBehaviour {
             anim.SetFloat("Speed", 0);
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.nameHash != Animator.StringToHash("Base Layer.Shot"))
         {
-            moveSpeed = 15;
-            anim.speed = 2;
-        }else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            moveSpeed = 5;
-            anim.speed = 1;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                moveSpeed = 15;
+                anim.speed = 2;
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                moveSpeed = 5;
+                anim.speed = 1;
+            }
         }
 
         RaycastHit hit;
@@ -64,6 +70,8 @@ public class Test_PlayerContllor : MonoBehaviour {
             // 自分を回転させる
             transform.rotation *= q;
         }
+
+        Debug.Log(CheckFlg);
     }
 
     private void FixedUpdate()
