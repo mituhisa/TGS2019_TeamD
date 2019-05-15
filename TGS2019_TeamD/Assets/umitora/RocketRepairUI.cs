@@ -45,9 +45,9 @@ public enum OBJECT
     GameObject SelectButton;      //今選択しているボタン
     GameObject ButtonBuf;   //前のフレームで選択したボタン
 
-    GameObject[] ButtonEffect = new GameObject[2];  //ボタンを選択しているエフェクトみたいなやつ
+    //GameObject[] ButtonEffect = new GameObject[2];  //ボタンを選択しているエフェクトみたいなやつ
 
-    IEnumerator cDisplayRocketRepair;       //ロケットを修理するUIを表示するやつ
+    //IEnumerator cDisplayRocketRepair;       //ロケットを修理するUIを表示するやつ
     bool isRepairDisplay = false;
 
 
@@ -77,6 +77,7 @@ public enum OBJECT
         PlayerdayoText.enabled=false;
 
 
+
         GameObject[] getButtons = new GameObject[(int)OBJECT.MAX * (int)Size.MAX];
         int i = 0;
         foreach(Transform child in RocketRepairImage.transform)
@@ -95,8 +96,10 @@ public enum OBJECT
         }
 
 
-
-
+        if (FirstSelectButton == null)
+        {
+            FirstSelectButton = GameObject.Find("Player_S_Item");
+        }
         //テキストをオフにしたりアイテムの数をセットしたりする
         foreach (Transform child in RocketRepairImage.transform)
         {

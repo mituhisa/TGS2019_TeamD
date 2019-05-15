@@ -247,6 +247,7 @@
     <Compile Include="Assets\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
     <Compile Include="Assets\umitora\CreateStage_umitora.cs" />
     <Compile Include="Assets\umitora\PlayerItemManager.cs" />
+    <Compile Include="Assets\umitora\PlayerItemUI.cs" />
     <Compile Include="Assets\umitora\RocketRepair.cs" />
     <Compile Include="Assets\umitora\RocketRepairUI.cs" />
     <Compile Include="Assets\umitora\Test\CameraController_umitora.cs" />
