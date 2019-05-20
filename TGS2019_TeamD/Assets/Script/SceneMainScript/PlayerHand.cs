@@ -22,9 +22,6 @@ public class PlayerHand : MonoBehaviour {
     [HideInInspector] public bool firingFlg = false;
     [HideInInspector] public Vector3 targetPos;
 
-    public GameObject ReturnTex;
-    public GameObject PullTex;
-    public GameObject SameTex;
     public GameObject player;
     public UIscript Ui;
     public GameObject PlayerCamera;
@@ -49,35 +46,14 @@ public class PlayerHand : MonoBehaviour {
             case State.Landing:
                 if(ItemTex == "Player")
                 {
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        state = State.Return;
-                        ReturnTex.SetActive(false);
-                    }
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        state = State.Release;
-                        ReturnTex.SetActive(false);
-                    }
-                }else if(ItemTex == "Item")
+                    state = State.Return;
+                }
+                else if(ItemTex == "Item")
                 {
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        state = State.Pull;
-                        PullTex.SetActive(false);
-                    }
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        state = State.Release;
-                        PullTex.SetActive(false);
-                    }
+                    state = State.Release;
                 }else if(ItemTex == "Same")
                 {
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        state = State.Release;
-                        SameTex.SetActive(false);
-                    }
+                    state = State.Release;
                 }
                 break;
             case State.Return:
@@ -134,21 +110,7 @@ public class PlayerHand : MonoBehaviour {
         {
             speed = 30.0f;
             state = State.Landing;
-            if(PIManager.ComparisonWeight(other.tag) == "Player")
-            {
-                ReturnTex.SetActive(true);
-                ItemTex = PIManager.ComparisonWeight(other.tag);
-            }
-            else if(PIManager.ComparisonWeight(other.tag) == "Item")
-            {
-                PullTex.SetActive(true);
-                ItemTex = PIManager.ComparisonWeight(other.tag);
-            }
-            else if(PIManager.ComparisonWeight(other.tag) == "Same")
-            {
-                SameTex.SetActive(true);
-                ItemTex = PIManager.ComparisonWeight(other.tag);
-            }
+            ItemTex = PIManager.ComparisonWeight(other.tag);
         }
         Debug.Log(other.tag);
        
