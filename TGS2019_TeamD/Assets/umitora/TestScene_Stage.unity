@@ -1896,9 +1896,13 @@ MonoBehaviour:
   state: 0
   firingFlg: 0
   targetPos: {x: 0, y: 0, z: 0}
-  text: {fileID: 2142686401}
+  ReturnTex: {fileID: 0}
+  PullTex: {fileID: 0}
+  SameTex: {fileID: 0}
   player: {fileID: 546194075}
   Ui: {fileID: 1168968475}
+  PlayerCamera: {fileID: 0}
+  PIManager: {fileID: 0}
 --- !u!4 &394479754
 Transform:
   m_ObjectHideFlags: 0
@@ -5665,8 +5669,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1168968474}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 119, y: 67, z: 0}
-  m_LocalScale: {x: 0.1859375, y: 0.1859375, z: 0.1859375}
+  m_LocalPosition: {x: 374, y: 210.5, z: 0}
+  m_LocalScale: {x: 0.584375, y: 0.584375, z: 0.584375}
   m_Children:
   - {fileID: 1232017548}
   - {fileID: 2060506819}
@@ -6700,7 +6704,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1364087224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -285.33615, z: 0}
+  m_LocalPosition: {x: 0, y: -285.2139, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 625368925}
@@ -7497,6 +7501,8 @@ MonoBehaviour:
   Right: {fileID: 1685791273}
   Left: {fileID: 289156795}
   LockOnMarker: {fileID: 1720843707}
+  anim: {fileID: 0}
+  animFlg: 0
 --- !u!1 &1530854194
 GameObject:
   m_ObjectHideFlags: 0
@@ -9510,7 +9516,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1939631684}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -180.33615, z: 0}
+  m_LocalPosition: {x: 0, y: -180.2139, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1168968479}
@@ -9949,6 +9955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156f5967f2aabf449bd706af03ef257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 546194075}
   FirstSelectButton: {fileID: 0}
 --- !u!1 &1960469255
 GameObject:

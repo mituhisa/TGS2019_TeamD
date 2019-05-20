@@ -150,7 +150,7 @@ public enum OBJECT
             {
                 //playerflag.playerMoveFlag = false;//********************************************    //プレイヤー動かせなくする
                 isRepairDisplay = true;                 //ロケット修理の画面表示するフラグ
-                RocketdayoText.enabled= true;           //ロケットだよのテキスト表示
+                RocketdayoText.enabled = true;           //ロケットだよのテキスト表示
                 PlayerdayoText.enabled = true;          //プレイヤーだよのテキスト表示
                 RocketRepairImage.SetActive(true);      //ロケット修理の画面表示
                 //StartCoroutine(cDisplayRocketRepair);   //ロケット修理の画面表示するコルーチン
@@ -167,17 +167,18 @@ public enum OBJECT
                 RocketRepairImage.SetActive(false);
                 //StopCoroutine(cDisplayRocketRepair);
             }
-        }
 
 
-        //ロケットの範囲内でボタン押してねのテキスト表示するやつ
-        if (isRepairDisplay)
-        {
-            PressButtonText.enabled = false;
-        }
-        else
-        {
-            PressButtonText.enabled = true;
+
+            //ロケットの範囲内でボタン押してねのテキスト表示するやつ
+            if (isRepairDisplay)
+            {
+                PressButtonText.enabled = false;
+            }
+            else
+            {
+                PressButtonText.enabled = true;
+            }
         }
 
     }
@@ -185,7 +186,8 @@ public enum OBJECT
     //ロケットの範囲からプレイヤーが出た時
     private void OnTriggerExit(Collider other)
     {
-        PressButtonText.enabled = false;
+        if (other.gameObject.tag == "Player")   //プレイヤーがロケットの範囲にいるときの処理
+            PressButtonText.enabled = false;
     }
 
 
@@ -204,7 +206,11 @@ public enum OBJECT
             else if (Input.GetButtonDown("ButtonRight"))
                 horizontal = 1;
             else if (Input.GetButtonDown("ButtonLeft"))
+            {
+                Debug.Log("left");
+
                 horizontal = -1;
+            }
             else
                 horizontal = 0;
 
@@ -278,7 +284,10 @@ public enum OBJECT
                     case "Player_S_Item":
                         if (myPlayerItemManager.PopItem("S_Item"))
                         {
-                            myRocketRepair.PushItem("S_Item");
+                            if (!myRocketRepair.PushItem("S_Item"))
+                            {
+                                myPlayerItemManager.PushItem("S_Item");
+                            }
 
                         }
 
@@ -287,7 +296,10 @@ public enum OBJECT
                     case "Player_M_Item":
                         if (myPlayerItemManager.PopItem("M_Item"))
                         {
-                            myRocketRepair.PushItem("M_Item");
+                            if (!myRocketRepair.PushItem("M_Item"))
+                            {
+                                myPlayerItemManager.PushItem("M_Item");
+                            }
 
                         }
 
@@ -296,7 +308,10 @@ public enum OBJECT
                     case "Player_L_Item":
                         if (myPlayerItemManager.PopItem("L_Item"))
                         {
-                            myRocketRepair.PushItem("L_Item");
+                            if (!myRocketRepair.PushItem("L_Item"))
+                            {
+                                myPlayerItemManager.PushItem("L_Item");
+                            }
 
                         }
 
@@ -305,7 +320,10 @@ public enum OBJECT
                     case "Player_XL_Item":
                         if (myPlayerItemManager.PopItem("XL_Item"))
                         {
-                            myRocketRepair.PushItem("XL_Item");
+                            if (!myRocketRepair.PushItem("XL_Item"))
+                            {
+                                myPlayerItemManager.PushItem("XL_Item");
+                            }
 
                         }
 
@@ -317,7 +335,10 @@ public enum OBJECT
                     case "Rocket_S_Item":
                         if (myRocketRepair.PopItem("S_Item"))
                         {
-                            myPlayerItemManager.PushItem("S_Item");
+                            if (!myPlayerItemManager.PushItem("S_Item"))
+                            {
+                                myRocketRepair.PushItem("S_Item");
+                            }
 
                         }
                         break;
@@ -325,7 +346,10 @@ public enum OBJECT
                     case "Rocket_M_Item":
                         if (myRocketRepair.PopItem("M_Item"))
                         {
-                            myPlayerItemManager.PushItem("M_Item");
+                            if (!myPlayerItemManager.PushItem("M_Item"))
+                            {
+                                myRocketRepair.PushItem("M_Item");
+                            }
 
                         }
 
@@ -334,7 +358,10 @@ public enum OBJECT
                     case "Rocket_L_Item":
                         if (myRocketRepair.PopItem("L_Item"))
                         {
-                            myPlayerItemManager.PushItem("L_Item");
+                            if (!myPlayerItemManager.PushItem("L_Item"))
+                            {
+                                myRocketRepair.PushItem("L_Item");
+                            }
 
                         }
 
@@ -343,7 +370,10 @@ public enum OBJECT
                     case "Rocket_XL_Item":
                         if (myRocketRepair.PopItem("XL_Item"))
                         {
-                            myPlayerItemManager.PushItem("XL_Item");
+                            if (!myPlayerItemManager.PushItem("XL_Item"))
+                            {
+                                myRocketRepair.PushItem("XL_Item");
+                            }
 
                         }
 
