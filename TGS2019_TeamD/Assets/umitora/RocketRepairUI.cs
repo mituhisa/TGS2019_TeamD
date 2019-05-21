@@ -146,7 +146,7 @@ public enum OBJECT
     {
         if (other.gameObject.tag == "Player")   //プレイヤーがロケットの範囲にいるときの処理
         {
-            if (Input.GetKeyDown(KeyCode.K) && !isRepairDisplay)    //範囲内でボタン押した時
+            if (Input.GetKeyDown(KeyCode.F) && !isRepairDisplay)    //範囲内でボタン押した時
             {
                 //playerflag.playerMoveFlag = false;//********************************************    //プレイヤー動かせなくする
                 isRepairDisplay = true;                 //ロケット修理の画面表示するフラグ
@@ -157,7 +157,7 @@ public enum OBJECT
                 StartCoroutine(DisplayRocketRepair());
             }
 
-            if (Input.GetKeyDown(KeyCode.L) && isRepairDisplay)     //
+           else if (Input.GetKeyDown(KeyCode.F) && isRepairDisplay)     //
             {
                 //playerflag.playerMoveFlag = true;//*********************************************
                 isRepairDisplay = false;
@@ -206,11 +206,7 @@ public enum OBJECT
             else if (Input.GetButtonDown("ButtonRight"))
                 horizontal = 1;
             else if (Input.GetButtonDown("ButtonLeft"))
-            {
-                Debug.Log("left");
-
                 horizontal = -1;
-            }
             else
                 horizontal = 0;
 
@@ -268,7 +264,7 @@ public enum OBJECT
             //if(Input.GetButtonDown(""))
 
             yield return null;//***************************************
-            if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 Player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 yield break;        //コルーチン終了
@@ -277,7 +273,7 @@ public enum OBJECT
 
             //ボタンを決定したときのやつ
 
-            else if (Input.GetKeyDown(KeyCode.K))
+            else if (Input.GetKeyDown(KeyCode.Q))
             {
                 switch (SelectButton.name)
                 {

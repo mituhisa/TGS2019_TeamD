@@ -35,7 +35,7 @@ public class UIscript : MonoBehaviour
     RocketRepair myRocketRepair;
 
 
-
+    Text WeightText;
 
     void Start()
     {
@@ -56,6 +56,9 @@ public class UIscript : MonoBehaviour
         timerText = GameObject.Find("Timer").GetComponent<Text>();
         myPlayerItemManager =   GameObject.Find("ItemManager").GetComponent<PlayerItemManager>();
         myRocketRepair = GameObject.Find("ItemManager").GetComponent<RocketRepair>();
+
+        WeightText = GameObject.Find("Weight").GetComponent<Text>();
+
     }
 
     void Update()
@@ -110,7 +113,7 @@ public class UIscript : MonoBehaviour
         Buff_slider.value = myPlayerItemManager.GetPowerRatio();//******************************************************************************************************
         Weight_slider.value = myPlayerItemManager.GetWeightRatio();
 
-
+        WeightText.text = myPlayerItemManager.GetWeight().ToString();
 
 
     }
