@@ -273,7 +273,7 @@ public enum OBJECT
 
             //ボタンを決定したときのやつ
 
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
                 switch (SelectButton.name)
                 {

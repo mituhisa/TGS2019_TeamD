@@ -266,7 +266,7 @@ public class PlayerItemUI : MonoBehaviour
 
             //ボタンを決定したときのやつ
 
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("input.h");
                 switch (SelectButton.name)
