@@ -378,7 +378,10 @@ public class PlayerItemManager : MonoBehaviour
     {
         return Item[(int)Size.S].num * S_ItemPower / CAPACITY;//*********************************************************
     }
-
+    public float GetWeight()
+    {
+        return PlayerWeight;
+    }
 
     //アイテムそれぞれが何個あるか取得する
     public void GetItemNum(out int[] tmp)

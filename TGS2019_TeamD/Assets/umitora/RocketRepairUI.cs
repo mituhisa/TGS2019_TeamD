@@ -146,18 +146,18 @@ public enum OBJECT
     {
         if (other.gameObject.tag == "Player")   //プレイヤーがロケットの範囲にいるときの処理
         {
-            if (Input.GetKeyDown(KeyCode.K) && !isRepairDisplay)    //範囲内でボタン押した時
+            if (Input.GetKeyDown(KeyCode.F) && !isRepairDisplay)    //範囲内でボタン押した時
             {
                 //playerflag.playerMoveFlag = false;//********************************************    //プレイヤー動かせなくする
                 isRepairDisplay = true;                 //ロケット修理の画面表示するフラグ
-                RocketdayoText.enabled= true;           //ロケットだよのテキスト表示
+                RocketdayoText.enabled = true;           //ロケットだよのテキスト表示
                 PlayerdayoText.enabled = true;          //プレイヤーだよのテキスト表示
                 RocketRepairImage.SetActive(true);      //ロケット修理の画面表示
                 //StartCoroutine(cDisplayRocketRepair);   //ロケット修理の画面表示するコルーチン
                 StartCoroutine(DisplayRocketRepair());
             }
 
-            if (Input.GetKeyDown(KeyCode.L) && isRepairDisplay)     //
+           else if (Input.GetKeyDown(KeyCode.F) && isRepairDisplay)     //
             {
                 //playerflag.playerMoveFlag = true;//*********************************************
                 isRepairDisplay = false;
@@ -167,17 +167,18 @@ public enum OBJECT
                 RocketRepairImage.SetActive(false);
                 //StopCoroutine(cDisplayRocketRepair);
             }
-        }
 
 
-        //ロケットの範囲内でボタン押してねのテキスト表示するやつ
-        if (isRepairDisplay)
-        {
-            PressButtonText.enabled = false;
-        }
-        else
-        {
-            PressButtonText.enabled = true;
+
+            //ロケットの範囲内でボタン押してねのテキスト表示するやつ
+            if (isRepairDisplay)
+            {
+                PressButtonText.enabled = false;
+            }
+            else
+            {
+                PressButtonText.enabled = true;
+            }
         }
 
     }
@@ -185,7 +186,8 @@ public enum OBJECT
     //ロケットの範囲からプレイヤーが出た時
     private void OnTriggerExit(Collider other)
     {
-        PressButtonText.enabled = false;
+        if (other.gameObject.tag == "Player")   //プレイヤーがロケットの範囲にいるときの処理
+            PressButtonText.enabled = false;
     }
 
 
@@ -262,7 +264,7 @@ public enum OBJECT
             //if(Input.GetButtonDown(""))
 
             yield return null;//***************************************
-            if (Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 Player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 yield break;        //コルーチン終了
@@ -271,14 +273,17 @@ public enum OBJECT
 
             //ボタンを決定したときのやつ
 
-            else if (Input.GetKeyDown(KeyCode.K))
+            else if (Input.GetKeyDown(KeyCode.Q))
             {
                 switch (SelectButton.name)
                 {
                     case "Player_S_Item":
                         if (myPlayerItemManager.PopItem("S_Item"))
                         {
-                            myRocketRepair.PushItem("S_Item");
+                            if (!myRocketRepair.PushItem("S_Item"))
+                            {
+                                myPlayerItemManager.PushItem("S_Item");
+                            }
 
                         }
 
@@ -287,7 +292,10 @@ public enum OBJECT
                     case "Player_M_Item":
                         if (myPlayerItemManager.PopItem("M_Item"))
                         {
-                            myRocketRepair.PushItem("M_Item");
+                            if (!myRocketRepair.PushItem("M_Item"))
+                            {
+                                myPlayerItemManager.PushItem("M_Item");
+                            }
 
                         }
 
@@ -296,7 +304,10 @@ public enum OBJECT
                     case "Player_L_Item":
                         if (myPlayerItemManager.PopItem("L_Item"))
                         {
-                            myRocketRepair.PushItem("L_Item");
+                            if (!myRocketRepair.PushItem("L_Item"))
+                            {
+                                myPlayerItemManager.PushItem("L_Item");
+                            }
 
                         }
 
@@ -305,7 +316,10 @@ public enum OBJECT
                     case "Player_XL_Item":
                         if (myPlayerItemManager.PopItem("XL_Item"))
                         {
-                            myRocketRepair.PushItem("XL_Item");
+                            if (!myRocketRepair.PushItem("XL_Item"))
+                            {
+                                myPlayerItemManager.PushItem("XL_Item");
+                            }
 
                         }
 
@@ -317,7 +331,10 @@ public enum OBJECT
                     case "Rocket_S_Item":
                         if (myRocketRepair.PopItem("S_Item"))
                         {
-                            myPlayerItemManager.PushItem("S_Item");
+                            if (!myPlayerItemManager.PushItem("S_Item"))
+                            {
+                                myRocketRepair.PushItem("S_Item");
+                            }
 
                         }
                         break;
@@ -325,7 +342,10 @@ public enum OBJECT
                     case "Rocket_M_Item":
                         if (myRocketRepair.PopItem("M_Item"))
                         {
-                            myPlayerItemManager.PushItem("M_Item");
+                            if (!myPlayerItemManager.PushItem("M_Item"))
+                            {
+                                myRocketRepair.PushItem("M_Item");
+                            }
 
                         }
 
@@ -334,7 +354,10 @@ public enum OBJECT
                     case "Rocket_L_Item":
                         if (myRocketRepair.PopItem("L_Item"))
                         {
-                            myPlayerItemManager.PushItem("L_Item");
+                            if (!myPlayerItemManager.PushItem("L_Item"))
+                            {
+                                myRocketRepair.PushItem("L_Item");
+                            }
 
                         }
 
@@ -343,7 +366,10 @@ public enum OBJECT
                     case "Rocket_XL_Item":
                         if (myRocketRepair.PopItem("XL_Item"))
                         {
-                            myPlayerItemManager.PushItem("XL_Item");
+                            if (!myPlayerItemManager.PushItem("XL_Item"))
+                            {
+                                myRocketRepair.PushItem("XL_Item");
+                            }
 
                         }
 
