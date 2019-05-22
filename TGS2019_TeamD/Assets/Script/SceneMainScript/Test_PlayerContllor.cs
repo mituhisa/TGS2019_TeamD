@@ -11,11 +11,17 @@ public class Test_PlayerContllor : MonoBehaviour {
     float inputHorizontal;
     float inputVertical;
 
+    AudioSource aud;
+    public AudioClip WalkSe;
+    public AudioClip ShotSe;
+    private bool ShotFlg = false;
+
     [HideInInspector] public bool CheckFlg = false;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        aud = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -45,11 +51,28 @@ public class Test_PlayerContllor : MonoBehaviour {
             {
                 moveSpeed = 15;
                 anim.speed = 2;
+                aud.pitch = 2.0f;
             }
             else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 moveSpeed = 5;
                 anim.speed = 1;
+                aud.pitch = 1.0f;
+            }
+        }
+
+        if (!aud.isPlaying)
+        {
+            if(stateInfo.nameHash == Animator.StringToHash("Base Layer.Walk"))
+            {
+                aud.PlayOneShot(WalkSe);
+            }
+        }
+        else
+        {
+            if(stateInfo.nameHash == Animator.StringToHash("Base Layer.Stay"))
+            {
+                aud.Stop();
             }
         }
 

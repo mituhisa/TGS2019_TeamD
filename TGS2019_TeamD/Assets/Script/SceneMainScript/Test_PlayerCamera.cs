@@ -22,12 +22,18 @@ public class Test_PlayerCamera : MonoBehaviour {
 
     [HideInInspector] public bool animFlg = false;
 
+    AudioSource aud;
+    public AudioClip ShotSe;
+    public AudioClip RockOnSe;
+    private bool RockOnFlg = false;
+
     // Use this for initialization
     void Start () {
         InitParentR = Right.transform.parent;
         InitParentL = Left.transform.parent;
 
         anim = player.GetComponent<Animator>();
+        aud = GetComponent<AudioSource>();
 	}
 
     // Update is called once per frame
@@ -38,6 +44,7 @@ public class Test_PlayerCamera : MonoBehaviour {
             targetPos = hit.point;
             anim.speed = 1;
             anim.SetBool("Shot", true);
+            aud.PlayOneShot(ShotSe);
             //Right.transform.parent = Hand.transform;
             //Left.transform.parent = Hand.transform;
             //Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
@@ -57,12 +64,15 @@ public class Test_PlayerCamera : MonoBehaviour {
         }
         if (Fire)
         {
-            Right.transform.parent = Hand.transform;
-            Left.transform.parent = Hand.transform;
-            Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
-            Hand.GetComponent<PlayerHand>().targetPos = targetPos;
-            player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
-            Fire = false;
+            if (!aud.isPlaying)
+            {
+                Right.transform.parent = Hand.transform;
+                Left.transform.parent = Hand.transform;
+                Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
+                Hand.GetComponent<PlayerHand>().targetPos = targetPos;
+                player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
+                Fire = false;
+            }
         }
 
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
@@ -92,9 +102,18 @@ public class Test_PlayerCamera : MonoBehaviour {
                 // hit.point が正面方向へRayをとばした際の接触座標.
                 RayHitFlg = true;
                 LockOnMarker.SetActive(true);
+                if (!aud.isPlaying)
+                {
+                    if (!RockOnFlg)
+                    {
+                        aud.PlayOneShot(RockOnSe);
+                        RockOnFlg = true;
+                    }
+                }
             }
             else
             {
+                RockOnFlg = false;
                 LockOnMarker.SetActive(false);
             }
         }

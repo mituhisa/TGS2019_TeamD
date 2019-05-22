@@ -26,6 +26,7 @@ public class PlayerHand : MonoBehaviour {
     public UIscript Ui;
     public GameObject PlayerCamera;
     public PlayerItemManager PIManager;
+    public AudioClip BackArmSe;
 
     // Use this for initialization
     void Start () {
@@ -61,13 +62,17 @@ public class PlayerHand : MonoBehaviour {
                 ItemObj.transform.parent = this.gameObject.transform;
                 if (transform.localPosition == InitPos)
                 {
+                    if (!this.gameObject.GetComponent<AudioSource>().isPlaying) this.gameObject.GetComponent<AudioSource>().PlayOneShot(BackArmSe);
                     speed = 30.0f;
                     PlayerCamera.GetComponent<Test_PlayerCamera>().anim.SetBool("Shot", false);
                     PlayerCamera.GetComponent<Test_PlayerCamera>().anim.speed = 1;
                     PIManager.PushItem(ItemObj.tag);
                     Destroy(ItemObj);
                     player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
-                    state = State.Normal;
+                    if (!this.gameObject.GetComponent<AudioSource>().isPlaying)
+                    {
+                        state = State.Normal;
+                    }
                 }
                 break;
             case State.Pull:
@@ -89,11 +94,15 @@ public class PlayerHand : MonoBehaviour {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, InitPos, speed * Time.deltaTime * 0.8f);
                 if (transform.localPosition == InitPos)
                 {
+                    if (!this.gameObject.GetComponent<AudioSource>().isPlaying) this.gameObject.GetComponent<AudioSource>().PlayOneShot(BackArmSe);
                     speed = 30.0f;
                     PlayerCamera.GetComponent<Test_PlayerCamera>().anim.SetBool("Shot", false);
                     PlayerCamera.GetComponent<Test_PlayerCamera>().anim.speed = 1;
                     player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
-                    state = State.Normal;
+                    if (!this.gameObject.GetComponent<AudioSource>().isPlaying)
+                    {
+                        state = State.Normal;
+                    }
                 }
                 break;
             case State.Normal:
