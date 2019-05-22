@@ -57,7 +57,7 @@ public class UIscript : MonoBehaviour
         myPlayerItemManager =   GameObject.Find("ItemManager").GetComponent<PlayerItemManager>();
         myRocketRepair = GameObject.Find("ItemManager").GetComponent<RocketRepair>();
 
-        WeightText = GameObject.Find("Weight").GetComponent<Text>();
+        WeightText = GameObject.Find("Weight_Text").GetComponent<Text>();
 
     }
 
