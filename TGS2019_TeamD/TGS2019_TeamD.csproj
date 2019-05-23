@@ -229,9 +229,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GlitchFx\GlitchFx.cs" />
     <Compile Include="Assets\Script\BuffIconRotate.cs" />
     <Compile Include="Assets\Script\SceneMainScript\FauxGravityAttractor.cs" />
     <Compile Include="Assets\Script\SceneMainScript\FauxGravityBody.cs" />
+    <Compile Include="Assets\Script\SceneMainScript\HandShake.cs" />
     <Compile Include="Assets\Script\SceneMainScript\PlayerCamera.cs" />
     <Compile Include="Assets\Script\SceneMainScript\PlayerController.cs" />
     <Compile Include="Assets\Script\SceneMainScript\PlayerFace.cs" />
@@ -331,6 +333,8 @@
     <Compile Include="Assets\VideoOnry\RoketMove.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\GlitchFx\Shader\GlitchFx.shader" />
+    <None Include="Assets\RobotModel\ロボットをUnityにアタッチする方法.txt" />
     <None Include="Assets\Unity Technologies\Recorder\Extensions\UTJ\Information.txt" />
     <None Include="Assets\Unity Technologies\Recorder\Framework\Core\Shaders\VerticalFlipper.shader" />
     <None Include="Assets\Unity Technologies\Recorder\Framework\Inputs\CBRenderTexture\Shaders\CopyFB.shader" />

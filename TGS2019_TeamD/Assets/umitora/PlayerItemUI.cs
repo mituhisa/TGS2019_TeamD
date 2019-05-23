@@ -119,6 +119,7 @@ public class PlayerItemUI : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                GetComponent<Test_PlayerContllor>().CheckFlg = true;
                 isDisplay = true;
                 StartCoroutine(DisplayPlayerItemImage());
             }
@@ -258,6 +259,7 @@ public class PlayerItemUI : MonoBehaviour
             yield return null;//***************************************
             if (Input.GetKeyDown(KeyCode.F))
             {
+                GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 isDisplay = false;
                 PlayerItemImage.SetActive(false);
                 yield break;        //コルーチン終了
@@ -266,7 +268,7 @@ public class PlayerItemUI : MonoBehaviour
 
             //ボタンを決定したときのやつ
 
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("input.h");
                 switch (SelectButton.name)

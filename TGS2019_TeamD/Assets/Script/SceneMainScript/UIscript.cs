@@ -22,6 +22,7 @@ public class UIscript : MonoBehaviour
     public Text M_text;
     public Text S_text;
     public Text timerText;
+    public GameObject Player;
 
     Slider Buff_slider;
     Slider Weight_slider;
@@ -65,10 +66,10 @@ public class UIscript : MonoBehaviour
     {
 
         //　制限時間が0秒以下ならなにもしない
-        if (totalTime <= 0f)
+        if (totalTime <= 5.0f)
         {
-            SceneManager.LoadScene("Over");
-            return;
+            Player.GetComponent<GlitchFx>().enabled = true;
+            Player.GetComponent<GlitchFx>().intensity += 0.2f * Time.deltaTime;
         }
         //　トータルの制限時間を計測
         totalTime = minute * 60 + seconds;
@@ -88,7 +89,8 @@ public class UIscript : MonoBehaviour
         //　制限時間以下になったら～
         if (totalTime <= 0f)
         {
-            Debug.Log("制限時間終了");
+            SceneManager.LoadScene("Over");
+            return;
         }
 
 

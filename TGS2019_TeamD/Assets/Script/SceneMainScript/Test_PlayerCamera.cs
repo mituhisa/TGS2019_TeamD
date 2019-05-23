@@ -14,6 +14,8 @@ public class Test_PlayerCamera : MonoBehaviour
     [HideInInspector] public Animator anim;
 
     Vector3 targetPos;
+    Vector3 RightInitPos;
+    Vector3 LeftInitPos;
     private bool RayHitFlg = false;
     private bool Fire = false;
     RaycastHit hit;
@@ -33,6 +35,8 @@ public class Test_PlayerCamera : MonoBehaviour
     {
         InitParentR = Right.transform.parent;
         InitParentL = Left.transform.parent;
+        RightInitPos = Right.transform.localPosition;
+        LeftInitPos = Left.transform.localPosition;
 
         anim = player.GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
@@ -47,12 +51,7 @@ public class Test_PlayerCamera : MonoBehaviour
             anim.speed = 1;
             anim.SetBool("Shot", true);
             aud.PlayOneShot(ShotSe);
-            //Right.transform.parent = Hand.transform;
-            //Left.transform.parent = Hand.transform;
-            //Hand.GetComponent<PlayerHand>().state = PlayerHand.State.Firing;
-            //Hand.GetComponent<PlayerHand>().targetPos = hit.point;
-            //Debug.Log(hit.point);
-            //player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
+            
         }
         else
         {
@@ -63,6 +62,8 @@ public class Test_PlayerCamera : MonoBehaviour
         {
             Right.transform.parent = InitParentR;
             Left.transform.parent = InitParentL;
+            Right.transform.localPosition = RightInitPos;
+            Left.transform.localPosition = LeftInitPos;
         }
         if (Fire)
         {

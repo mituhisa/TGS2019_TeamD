@@ -95,7 +95,6 @@ public class Test_PlayerContllor : MonoBehaviour
             transform.rotation *= q;
         }
 
-        Debug.Log(CheckFlg);
     }
 
     private void FixedUpdate()
