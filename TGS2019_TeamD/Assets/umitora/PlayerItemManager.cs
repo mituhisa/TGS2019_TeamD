@@ -396,4 +396,59 @@ public class PlayerItemManager : MonoBehaviour
 
 
 
+    //アイテムを入れる
+    public bool CanPushItem(string tag)
+    {
+        bool bReturn = false;
+
+        switch (tag)
+        {
+            case "S_Item":
+                if (PlayerWeight + Item[(int)Size.S].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+
+            case "M_Item":
+                if (PlayerWeight + Item[(int)Size.M].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+
+            case "L_Item":
+                if (PlayerWeight + Item[(int)Size.L].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+
+            case "XL_Item":
+                if (PlayerWeight + Item[(int)Size.XL].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+        }
+
+        if (bReturn)
+        {
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+
+
+
 }
