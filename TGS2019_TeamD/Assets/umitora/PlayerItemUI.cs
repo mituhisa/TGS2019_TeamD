@@ -36,8 +36,10 @@ public class PlayerItemUI : MonoBehaviour
 
     Transform myPlayer;
 
+    public GameObject Player;
+
     bool isDisplay=false;
-    bool canDisplay = false;
+    bool canDisplay = true;
     // Use this for initialization
 
     void Start()
@@ -105,7 +107,8 @@ public class PlayerItemUI : MonoBehaviour
 
 
 
-        PlayerItemImage.SetActive(false);
+        PlayerItemImage.SetActive(false);       
+        //PlayerItemImage.SetActive(true);
 
 
     }
@@ -116,34 +119,55 @@ public class PlayerItemUI : MonoBehaviour
         
         if (canDisplay&&  !isDisplay)
         {
-            if (Input.GetKeyDown(KeyCode.H))
+            if (Input.GetKeyDown(KeyCode.F))
             {
+                Player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
                 isDisplay = true;
                 StartCoroutine(DisplayPlayerItemImage());
             }
         }
 
+        //Debug.Log("update");
 
-
-
+        //Debug.Log("can" + canDisplay);
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag=="GameObj")
-        canDisplay = false;
+        if (other.gameObject.tag == "Rocket")
+        {
+            canDisplay = false;
 
+        }
+        Debug.Log("tag"+other.gameObject.tag);
+        Debug.Log("name" + other.gameObject.name);
         Debug.Log("Enter");
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Rocket")
+        {
+            canDisplay = false;
+
+        }
+
     }
 
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "GameObj")
+        if (other.gameObject.tag == "Rocket")
+        {
             canDisplay = true;
 
+        }
+        Debug.Log("tag" + other.gameObject.tag);
+        Debug.Log("name" + other.gameObject.name);
         Debug.Log("Exit");
+
     }
 
 
@@ -235,8 +259,9 @@ public class PlayerItemUI : MonoBehaviour
             //if(Input.GetButtonDown(""))
 
             yield return null;//***************************************
-            if (Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.F))
             {
+                Player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 isDisplay = false;
                 PlayerItemImage.SetActive(false);
                 yield break;        //コルーチン終了
@@ -245,7 +270,7 @@ public class PlayerItemUI : MonoBehaviour
 
             //ボタンを決定したときのやつ
 
-            else if (Input.GetKeyDown(KeyCode.H))
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("input.h");
                 switch (SelectButton.name)

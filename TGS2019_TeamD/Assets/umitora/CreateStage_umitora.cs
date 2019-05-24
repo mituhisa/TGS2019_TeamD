@@ -9,8 +9,10 @@ public class CreateStage_umitora : MonoBehaviour
 
     public enum PREFAB_NAME
     {
-        CUBE,
-        SPHERE,
+        S_Item,
+        M_Item,
+        L_Item,
+        XL_Item,
 
 
         MAX
@@ -26,7 +28,7 @@ public class CreateStage_umitora : MonoBehaviour
     void Start()
     {
 
-        Planet = GameObject.Find("Ground2_umitora").GetComponent<Transform>();      //惑星取得
+        Planet = GameObject.Find("Planet").GetComponent<Transform>();      //惑星取得
 
 
 
@@ -61,8 +63,10 @@ public class CreateStage_umitora : MonoBehaviour
 
         //Prefab = Resources.Load("Prefab/M_Item") as GameObject;
 
-        Prefab[(int)PREFAB_NAME.CUBE] = Resources.Load("Prefab/CubePrefab") as GameObject;
-        Prefab[(int)PREFAB_NAME.SPHERE] = Resources.Load("Prefab/SpherePrefab") as GameObject;
+        Prefab[(int)PREFAB_NAME.S_Item] = Resources.Load("Prefab/S_Item") as GameObject;
+        Prefab[(int)PREFAB_NAME.M_Item] = Resources.Load("Prefab/M_Item") as GameObject;
+        Prefab[(int)PREFAB_NAME.L_Item] = Resources.Load("Prefab/L_Item") as GameObject;
+        Prefab[(int)PREFAB_NAME.XL_Item] = Resources.Load("Prefab/XL_Item") as GameObject;
 
 
 
@@ -76,8 +80,8 @@ public class CreateStage_umitora : MonoBehaviour
         {
             int randomNumber = Random.Range(0, (int)PREFAB_NAME.MAX);
             GameObject instancePrefab = Instantiate(Prefab[randomNumber]);
-            float randomScale = Random.Range(5f, 20);
-            instancePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+            //float randomScale = Random.Range(5f, 20);
+            //instancePrefab.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
             //instancePrefab.transform.localScale *=randomScale;
 
 

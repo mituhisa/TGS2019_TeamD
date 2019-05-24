@@ -9,6 +9,7 @@ TagManager:
   - L_Item
   - XL_Item
   - GameObj
+  - Rocket
   layers:
   - Default
   - TransparentFX
