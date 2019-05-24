@@ -378,7 +378,10 @@ public class PlayerItemManager : MonoBehaviour
     {
         return Item[(int)Size.S].num * S_ItemPower / CAPACITY;//*********************************************************
     }
-
+    public float GetWeight()
+    {
+        return PlayerWeight;
+    }
 
     //アイテムそれぞれが何個あるか取得する
     public void GetItemNum(out int[] tmp)
@@ -388,6 +391,61 @@ public class PlayerItemManager : MonoBehaviour
         tmp[(int)Size.M] = Item[(int)Size.M].num;
         tmp[(int)Size.L] = Item[(int)Size.L].num;
         tmp[(int)Size.XL] = Item[(int)Size.XL].num;
+    }
+
+
+
+
+    //アイテムを入れる
+    public bool CanPushItem(string tag)
+    {
+        bool bReturn = false;
+
+        switch (tag)
+        {
+            case "S_Item":
+                if (PlayerWeight + Item[(int)Size.S].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+
+            case "M_Item":
+                if (PlayerWeight + Item[(int)Size.M].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+
+            case "L_Item":
+                if (PlayerWeight + Item[(int)Size.L].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+
+            case "XL_Item":
+                if (PlayerWeight + Item[(int)Size.XL].weight <= CAPACITY)
+                {
+                    bReturn = true;
+                }
+
+                break;
+        }
+
+        if (bReturn)
+        {
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
 

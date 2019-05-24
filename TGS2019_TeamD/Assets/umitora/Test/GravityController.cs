@@ -19,7 +19,7 @@ public class GravityController : MonoBehaviour
 
         myRigidbody = GetComponent<Rigidbody>();
 
-        Planet = GameObject.Find("Ground2_umitora").GetComponent<Transform>();  //惑星取得
+        Planet = GameObject.Find("Planet").GetComponent<Transform>();  //惑星取得
         //Planet = GameObject.Find("tikei").GetComponent<Transform>();  //惑星取得
         //Planet = GameObject.Find("wakusei").GetComponent<Transform>();  //惑星取得
         //Planet = GameObject.Find("wakusei2").GetComponent<Transform>();  //惑星取得
