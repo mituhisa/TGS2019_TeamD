@@ -36,6 +36,8 @@ public class PlayerItemUI : MonoBehaviour
 
     Transform myPlayer;
 
+    public GameObject Player;
+
     bool isDisplay=false;
     bool canDisplay = true;
     // Use this for initialization
@@ -119,7 +121,7 @@ public class PlayerItemUI : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                GetComponent<Test_PlayerContllor>().CheckFlg = true;
+                Player.GetComponent<Test_PlayerContllor>().CheckFlg = true;
                 isDisplay = true;
                 StartCoroutine(DisplayPlayerItemImage());
             }
@@ -259,7 +261,7 @@ public class PlayerItemUI : MonoBehaviour
             yield return null;//***************************************
             if (Input.GetKeyDown(KeyCode.F))
             {
-                GetComponent<Test_PlayerContllor>().CheckFlg = false;
+                Player.GetComponent<Test_PlayerContllor>().CheckFlg = false;
                 isDisplay = false;
                 PlayerItemImage.SetActive(false);
                 yield break;        //コルーチン終了

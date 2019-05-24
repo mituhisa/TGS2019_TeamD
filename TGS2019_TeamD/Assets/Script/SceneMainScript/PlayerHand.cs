@@ -16,7 +16,7 @@ public class PlayerHand : MonoBehaviour
     }
     [HideInInspector] public State state;
 
-    private string ItemTex;
+    private bool CanPushFlg;
     private float speed = 30.0f;
     private Vector3 InitPos;
     private Quaternion InitRot;
@@ -50,20 +50,30 @@ public class PlayerHand : MonoBehaviour
                 //speed += -Time.deltaTime * 10.0f;
                 break;
             case State.Landing:
-                if (ItemTex == "Player")
+                if (CanPushFlg)
                 {
                     ItemObj.transform.parent = this.gameObject.transform;
                     state = State.Return;
                 }
-                else if (ItemTex == "Item")
-                {
-                    state = State.Release;
-                }
-                else if (ItemTex == "Same")
+                else
                 {
                     state = State.Release;
                 }
                 break;
+            //if (ItemTex == "Player")
+            //{
+            //    ItemObj.transform.parent = this.gameObject.transform;
+            //    state = State.Return;
+            //}
+            //else if (ItemTex == "Item")
+            //{
+            //    state = State.Release;
+            //}
+            //else if (ItemTex == "Same")
+            //{
+            //    state = State.Release;
+            //}
+            //break;
             case State.Return:
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, InitPos, speed * Time.deltaTime * 0.8f);
                 if (transform.localPosition == InitPos)
@@ -135,7 +145,7 @@ public class PlayerHand : MonoBehaviour
         {
             speed = 30.0f;
             state = State.Landing;
-            ItemTex = PIManager.ComparisonWeight(other.tag);
+            CanPushFlg = PIManager.CanPushItem(other.tag);
         }
 
         if (other.tag == "S_Item" || other.tag == "M_Item" || other.tag == "L_Item" || other.tag == "XL_Item")
