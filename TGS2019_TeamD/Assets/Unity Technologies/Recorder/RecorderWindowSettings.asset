@@ -26,8 +26,8 @@ MonoBehaviour:
   m_AssetID: 19a4890b004a4824da44fa91f5e63b90
   m_CaptureEveryNthFrame: 1
   m_FrameRateMode: 1
-  m_FrameRate: 30
-  m_FrameRateExact: 1
+  m_FrameRate: 60
+  m_FrameRateExact: 512
   m_StartFrame: 0
   m_EndFrame: 10
   m_StartTime: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   m_DurationMode: 0
   m_SynchFrameRate: 1
   m_BaseFileName:
-    m_Pattern: test1.<ext>
+    m_Pattern: test2.<ext>
   m_DestinationPath:
     m_root: 1
     m_leaf: Recordings
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: Pixels
   m_Id: b3b6b089-0261-4ee5-99cc-8d1676412ee0
-  m_OutputSize: 1080
+  m_OutputSize: 0
   m_AspectRatio: 0
   m_ForceEvenSize: 1
   source: 1

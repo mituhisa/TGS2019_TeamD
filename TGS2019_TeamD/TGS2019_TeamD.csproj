@@ -220,7 +220,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GameOverScript\Blink.cs" />
     <Compile Include="Assets\GlitchFx\GlitchFx.cs" />
+    <Compile Include="Assets\Roket\RocketMove.cs" />
+    <Compile Include="Assets\Rubble\ObjectRandomSpawn.cs" />
+    <Compile Include="Assets\Rubble\RubbleCreate.cs" />
+    <Compile Include="Assets\Rubble\RubbleGravity.cs" />
+    <Compile Include="Assets\Rubble\RubbleMove.cs" />
     <Compile Include="Assets\Script\BuffIconRotate.cs" />
     <Compile Include="Assets\Script\SceneMainScript\FauxGravityAttractor.cs" />
     <Compile Include="Assets\Script\SceneMainScript\FauxGravityBody.cs" />
